@@ -3,7 +3,8 @@
     <Header />
     <!-- 路由組件的出口處 -->
     <router-view></router-view>
-    <Footer />
+    <!-- 在home或Search出現 -->
+    <Footer v-show="$route.meta.show" />
   </div>
 </template>
 
@@ -12,9 +13,9 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 export default {
   name: 'App',
-  components: { 
-    Header, 
-    Footer, 
+  components: {
+    Header,
+    Footer,
   }
 }
 </script>
