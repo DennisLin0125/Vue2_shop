@@ -35,16 +35,8 @@
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input
-            type="text"
-            id="autocomplete"
-            class="input-error input-xxlarge"
-          />
-          <button
-            class="sui-btn btn-xlarge btn-danger"
-            type="button"
-            @click="goSearch"
-          >
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
             搜尋
           </button>
         </form>
@@ -57,10 +49,29 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Header",
+  data() {
+    return {
+      keyword: ''
+    }
+  },
   methods: {
     // 搜索按鈕的回調函數
     goSearch() {
-      this.$router.push("/search");
+      // 路由傳參
+      // 第一種:字串型式
+      // this.$router.push("/search/" + this.keyword + '?k=' + this.keyword.toUpperCase());
+      // 第二種:模板字串
+      // this.$router.push(`/search/${this.keyword}?k=${this.keyword.toUpperCase()}`)
+      // 第三種:物件
+      this.$router.push({
+        name: 'search',
+        params:{
+          keyword:this.keyword
+        },
+        query: {
+          k: this.keyword.toUpperCase()
+        }
+      })
     },
   },
 };
@@ -68,7 +79,7 @@ export default {
 
 <style scoped lang="less">
 .header {
-  & > .top {
+  &>.top {
     background-color: #eaeaea;
     height: 30px;
     line-height: 30px;
@@ -99,7 +110,7 @@ export default {
         a {
           padding: 0 10px;
 
-          & + a {
+          &+a {
             border-left: 1px solid #b3aeae;
           }
         }
@@ -107,7 +118,7 @@ export default {
     }
   }
 
-  & > .bottom {
+  &>.bottom {
     width: 1200px;
     margin: 0 auto;
     overflow: hidden;

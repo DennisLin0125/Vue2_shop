@@ -1,6 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div>我是搜尋</div>
+  <div>
+    <h1>params參數 : {{ $route.params.keyword }}</h1>
+    <h1>query參數 : {{ $route.query.k }}</h1>
+  </div>
 </template>
   
   <script>
