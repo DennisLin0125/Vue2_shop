@@ -10,6 +10,8 @@
     <Rank />
     <Like />
     <Floor />
+    <Floor />
+    <Brand />
   </div>
 </template>
 
@@ -20,6 +22,7 @@ import Recommend from '@/pages/Home/Recommend'
 import Rank from '@/pages/Home/Rank'
 import Like from '@/pages/Home/Like'
 import Floor from '@/pages/Home/Floor'
+import Brand from '@/pages/Home/Brand'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -30,6 +33,7 @@ export default {
     Rank,
     Like,
     Floor,
+    Brand
   }
 };
 </script>
