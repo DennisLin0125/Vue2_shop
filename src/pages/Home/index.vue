@@ -8,6 +8,7 @@
     <ListContainer />
     <Recommend />
     <Rank />
+    <Like />
   </div>
 </template>
 
@@ -16,6 +17,7 @@
 import ListContainer from '@/pages/Home/ListContainer'
 import Recommend from '@/pages/Home/Recommend'
 import Rank from '@/pages/Home/Rank'
+import Like from '@/pages/Home/Like'
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -24,6 +26,7 @@ export default {
     ListContainer,
     Recommend,
     Rank,
+    Like,
   }
 };
 </script>
