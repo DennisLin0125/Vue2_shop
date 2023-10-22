@@ -16,6 +16,10 @@ import Search from '@/pages/Search'
 export default new VueRouter({
     routes:[
         {
+            path: '*',
+            redirect: '/home',
+        },
+        {
             path: '/home',
             component: Home,
         },

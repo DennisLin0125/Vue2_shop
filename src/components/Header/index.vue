@@ -9,8 +9,9 @@
           <p>尚品匯歡迎您！</p>
           <p>
             <span>請</span>
-            <a href="###">登入</a>
-            <a href="###" class="register">免費註冊</a>
+            <!-- 聲明式導航 -->
+            <router-link to="/login">登入</router-link>
+            <router-link to="/register" class="register">免費註冊</router-link>
           </p>
         </div>
         <div class="typeList">
@@ -28,9 +29,9 @@
     <!--頭部第二行 搜尋區域-->
     <div class="bottom">
       <h1 class="logoArea">
-        <a class="logo" title="尚品匯" href="###" target="_blank">
+        <router-link class="logo" to="/home">
           <img src="./images/logo.png" alt="" />
-        </a>
+        </router-link>
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
@@ -39,7 +40,11 @@
             id="autocomplete"
             class="input-error input-xxlarge"
           />
-          <button class="sui-btn btn-xlarge btn-danger" type="button">
+          <button
+            class="sui-btn btn-xlarge btn-danger"
+            type="button"
+            @click="goSearch"
+          >
             搜尋
           </button>
         </form>
@@ -50,8 +55,14 @@
 
 <script>
 export default {
-    // eslint-disable-next-line vue/multi-word-component-names
-    name: 'Header'
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: "Header",
+  methods: {
+    // 搜索按鈕的回調函數
+    goSearch() {
+      this.$router.push("/search");
+    },
+  },
 };
 </script>
 
