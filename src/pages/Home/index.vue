@@ -1,6 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div>我是首頁</div>
+  <div>
+    <!-- 使用三級連動全局組件 -->
+    <TypeNav />
+  </div>
 </template>
 
 <script>
@@ -10,5 +13,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
