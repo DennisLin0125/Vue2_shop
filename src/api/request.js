@@ -6,7 +6,6 @@ import nProgress from "nprogress";
 import 'nprogress/nprogress.css'
 // start方法代表進度條開始
 // done方法代表進度條結束
-console.log(nProgress)
 
 // 1. 利用axios物件的create方法,去創建一個實例
 // 2. request就是axios
