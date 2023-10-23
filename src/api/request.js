@@ -12,7 +12,7 @@ const request = axios.create({
 })
 // 請求攔截器,在發送請求之前,請求攔截器可以偵測到
 // config 是一個配置對象,裡面有一個很重要的的屬性,header
-request.interceptors.request.use(config => config)
+request.interceptors.request.use(config => config )
 
 // 響應攔截器
 request.interceptors.response.use(response => response.data, error => Promise.reject(error))
