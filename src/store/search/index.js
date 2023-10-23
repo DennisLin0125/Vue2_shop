@@ -1,6 +1,5 @@
 // search 的store
 export const searchStore = {
-    namespaced: true,
     // 準備actions用於響應組件中的動作
     actions: {
     },

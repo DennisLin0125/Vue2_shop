@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 // 三級連動組件  -- 全局組件
-import TypeNav from '@/pages/Home/TypeNav'
+import TypeNav from '@/components/TypeNav'
 // 註冊為全局組件
 Vue.component(TypeNav.name, TypeNav)
 
@@ -9,9 +9,7 @@ Vue.component(TypeNav.name, TypeNav)
 import router from '@/router'
 // 引入store
 import store from '@/store'
-// 測試
-import {reqCategoryList}from '@/api'
-reqCategoryList();
+
 
 Vue.config.productionTip = false
 
