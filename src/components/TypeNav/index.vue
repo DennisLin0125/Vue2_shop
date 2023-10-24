@@ -8,7 +8,8 @@
         <h2 class="all">全部商品分類</h2>
         <!-- 三級連動 -->
         <div class="sort">
-          <div class="all-sort-list2">
+          <!-- 利用事件委派+編程式導航 -->
+          <div class="all-sort-list2" @click="goSearch">
             <!-- 一級分類 -->
             <div
               class="item"
@@ -17,7 +18,11 @@
               :class="{ cur: currentIndex == index }"
             >
               <h3 @mouseenter="changeIndex(index)">
-                <a href="">{{ c1.categoryName }}</a>
+                <a
+                  :data-categoryName="c1.categoryName"
+                  :data-category1Id="c1.categoryId"
+                  >{{ c1.categoryName }}</a
+                >
               </h3>
               <!-- 二級分類 -->
               <div
@@ -31,12 +36,20 @@
                 >
                   <dl class="fore">
                     <dt>
-                      <a href="">{{ c2.categoryName }}</a>
+                      <a
+                        :data-categoryName="c2.categoryName"
+                        :data-category2Id="c2.categoryId"
+                        >{{ c2.categoryName }}</a
+                      >
                     </dt>
                     <!-- 三級分類 -->
                     <dd>
                       <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                        <a href="">{{ c3.categoryName }}</a>
+                        <a
+                          :data-categoryName="c3.categoryName"
+                          :data-category3Id="c3.categoryId"
+                          >{{ c3.categoryName }}</a
+                        >
                       </em>
                     </dd>
                   </dl>
@@ -96,6 +109,33 @@ export default {
     // 鼠標離開修改響應式數據currentIndex
     leaveIndex() {
       this.currentIndex = -1;
+    },
+    goSearch(event) {
+      // 把子節點加上:data-categoryName 來區分是否點到a標籤
+      let element = event.target;
+      let { categoryname, category1id, category2id, category3id } =
+        element.dataset;
+
+      if (categoryname) {
+        // 如果是a標籤
+        // 整理路由跳轉的參數
+        let location = { name: "search" };
+        let query = { categoryName: categoryname };
+        if (category1id) {
+          // 如果是一級分類
+          query.category1Id = category1id;
+        } else if (category2id) {
+          // 如果是二級分類
+          query.category2Id = category2id;
+        } else if (category3id) {
+          // 如果是三級分類
+          query.category3Id = category3id;
+        }
+        // 整理完參數
+        location.query = query;
+        // 跳轉路由
+        this.$router.push(location);
+      }
     },
   },
 };
