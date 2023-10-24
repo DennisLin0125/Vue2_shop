@@ -6,25 +6,36 @@
       <!-- 事件委派 -->
       <div @mouseleave="leaveIndex">
         <h2 class="all">全部商品分類</h2>
+        <!-- 三級連動 -->
         <div class="sort">
           <div class="all-sort-list2">
-            <div 
-              class="item" 
-              v-for="(c1,index) in categoryList" 
-              :key="c1.categoryId" 
+            <!-- 一級分類 -->
+            <div
+              class="item"
+              v-for="(c1, index) in categoryList"
+              :key="c1.categoryId"
               :class="{ cur: currentIndex == index }"
-              >
+            >
               <h3 @mouseenter="changeIndex(index)">
                 <a href="">{{ c1.categoryName }}</a>
               </h3>
-              <div class="item-list clearfix">
-                <div class="subitem" v-for="(c2) in c1.categoryChild" :key="c2.categoryId">
+              <!-- 二級分類 -->
+              <div
+                class="item-list clearfix"
+                :style="{ display: currentIndex == index ? 'block' : 'none' }"
+              >
+                <div
+                  class="subitem"
+                  v-for="c2 in c1.categoryChild"
+                  :key="c2.categoryId"
+                >
                   <dl class="fore">
                     <dt>
                       <a href="">{{ c2.categoryName }}</a>
                     </dt>
+                    <!-- 三級分類 -->
                     <dd>
-                      <em v-for="(c3) in c2.categoryChild" :key="c3.categoryId">
+                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
                         <a href="">{{ c3.categoryName }}</a>
                       </em>
                     </dd>
@@ -56,9 +67,8 @@ export default {
   data() {
     return {
       // 存放客戶的滑鼠放置於哪個項目導航上,-1代表都沒碰到
-      currentIndex : -1,
-
-    }
+      currentIndex: -1,
+    };
   },
   // 當組件掛載完畢就可以發請求
   mounted() {
@@ -74,15 +84,15 @@ export default {
   },
   methods: {
     // 鼠標進入修改響應式數據currentIndex
-    changeIndex(index){
+    changeIndex(index) {
       // index為某一個鼠標進入的數據
-      this.currentIndex = index
+      this.currentIndex = index;
     },
     // 鼠標離開修改響應式數據currentIndex
-    leaveIndex(){
-      this.currentIndex = -1
-    }
-  }
+    leaveIndex() {
+      this.currentIndex = -1;
+    },
+  },
 };
 </script>
 
@@ -196,13 +206,13 @@ export default {
             }
           }
 
-          &:hover {
-            .item-list {
-              display: block;
-            }
-          }
+          // &:hover {
+          //   .item-list {
+          //     display: block;
+          //   }
+          // }
         }
-        .cur{
+        .cur {
           background: skyblue;
         }
       }
