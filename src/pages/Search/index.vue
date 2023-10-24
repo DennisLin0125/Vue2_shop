@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <h1>params參數 : {{ $route.params.keyword }}</h1>
-    <h1>query參數 : {{ $route.query.k }}</h1>
+    <!-- 這是search模塊 -->
+    <TypeNav/>
   </div>
 </template>
   

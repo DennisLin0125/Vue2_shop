@@ -4,60 +4,64 @@
   <div class="type-nav">
     <div class="container">
       <!-- 事件委派 -->
-      <div @mouseleave="leaveIndex">
+      <div @mouseleave="leaveShow" @mouseenter="enterShow">
         <h2 class="all">全部商品分類</h2>
+        
         <!-- 三級連動 -->
-        <div class="sort">
-          <!-- 利用事件委派+編程式導航 -->
-          <div class="all-sort-list2" @click="goSearch">
-            <!-- 一級分類 -->
-            <div
-              class="item"
-              v-for="(c1, index) in categoryList"
-              :key="c1.categoryId"
-              :class="{ cur: currentIndex == index }"
-            >
-              <h3 @mouseenter="changeIndex(index)">
-                <a
-                  :data-categoryName="c1.categoryName"
-                  :data-category1Id="c1.categoryId"
-                  >{{ c1.categoryName }}</a
-                >
-              </h3>
-              <!-- 二級分類 -->
+        <!-- 過度動畫 -->
+        <transition name="sort">
+          <div class="sort" v-show="show">
+            <!-- 利用事件委派+編程式導航 -->
+            <div class="all-sort-list2" @click="goSearch">
+              <!-- 一級分類 -->
               <div
-                class="item-list clearfix"
-                :style="{ display: currentIndex == index ? 'block' : 'none' }"
+                class="item"
+                v-for="(c1, index) in categoryList"
+                :key="c1.categoryId"
+                :class="{ cur: currentIndex == index }"
               >
+                <h3 @mouseenter="changeIndex(index)">
+                  <a
+                    :data-categoryName="c1.categoryName"
+                    :data-category1Id="c1.categoryId"
+                    >{{ c1.categoryName }}</a
+                  >
+                </h3>
+                <!-- 二級分類 -->
                 <div
-                  class="subitem"
-                  v-for="c2 in c1.categoryChild"
-                  :key="c2.categoryId"
+                  class="item-list clearfix"
+                  :style="{ display: currentIndex == index ? 'block' : 'none' }"
                 >
-                  <dl class="fore">
-                    <dt>
-                      <a
-                        :data-categoryName="c2.categoryName"
-                        :data-category2Id="c2.categoryId"
-                        >{{ c2.categoryName }}</a
-                      >
-                    </dt>
-                    <!-- 三級分類 -->
-                    <dd>
-                      <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                  <div
+                    class="subitem"
+                    v-for="c2 in c1.categoryChild"
+                    :key="c2.categoryId"
+                  >
+                    <dl class="fore">
+                      <dt>
                         <a
-                          :data-categoryName="c3.categoryName"
-                          :data-category3Id="c3.categoryId"
-                          >{{ c3.categoryName }}</a
+                          :data-categoryName="c2.categoryName"
+                          :data-category2Id="c2.categoryId"
+                          >{{ c2.categoryName }}</a
                         >
-                      </em>
-                    </dd>
-                  </dl>
+                      </dt>
+                      <!-- 三級分類 -->
+                      <dd>
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a
+                            :data-categoryName="c3.categoryName"
+                            :data-category3Id="c3.categoryId"
+                            >{{ c3.categoryName }}</a
+                          >
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
       <nav class="nav">
         <a href="###">服裝城</a>
@@ -84,12 +88,18 @@ export default {
     return {
       // 存放客戶的滑鼠放置於哪個項目導航上,-1代表都沒碰到
       currentIndex: -1,
+      show: true,
     };
   },
   // 當組件掛載完畢就可以發請求
   mounted() {
     // 通知Vuex發送請求,獲取數據,存儲於倉庫中
     this.$store.dispatch("categoryList");
+    // 當組件掛載完畢變為false
+    // 如果不是home路由組件,就把TypeNav組件隱藏
+    if (this.$route.path != "/home") {
+      this.show = false;
+    }
   },
   computed: {
     ...mapState({
@@ -105,10 +115,15 @@ export default {
       // index為某一個鼠標進入的數據
       this.currentIndex = index;
     }, 50),
-
-    // 鼠標離開修改響應式數據currentIndex
-    leaveIndex() {
+    leaveShow() {
+      // 鼠標離開修改響應式數據currentIndex
       this.currentIndex = -1;
+
+      // 在home組件時略過
+      if (this.$route.path != "/home") {
+        // 當鼠標離開的時候讓項目隱藏
+        this.show = false;
+      }
     },
     goSearch(event) {
       // 把子節點加上:data-categoryName 來區分是否點到a標籤
@@ -136,6 +151,10 @@ export default {
         // 跳轉路由
         this.$router.push(location);
       }
+    },
+    enterShow() {
+      // 當鼠標移入的時候讓項目顯示
+      this.show = true;
     },
   },
 };
@@ -261,6 +280,21 @@ export default {
           background: skyblue;
         }
       }
+    }
+    // 過度動畫的樣式
+    // 動畫(開始)
+    .sort-enter {
+      height: 0px;
+    }
+
+    // 動畫(結束)
+    .sort-enter-to {
+      height: 461px;
+    }
+
+    // 定義動畫時間
+    .sort-enter-active {
+      transition: all .5s linear;
     }
   }
 }
