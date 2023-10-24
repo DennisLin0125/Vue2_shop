@@ -61,7 +61,10 @@
 </template>
 
 <script>
+// 引入throttle來節流
+import throttle from "lodash/throttle";
 import { mapState } from "vuex";
+
 export default {
   name: "TypeNav",
   data() {
@@ -84,10 +87,12 @@ export default {
   },
   methods: {
     // 鼠標進入修改響應式數據currentIndex
-    changeIndex(index) {
+    // 利用lodash來節流
+    changeIndex: throttle(function (index) {
       // index為某一個鼠標進入的數據
       this.currentIndex = index;
-    },
+    }, 50),
+
     // 鼠標離開修改響應式數據currentIndex
     leaveIndex() {
       this.currentIndex = -1;
