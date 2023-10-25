@@ -91,10 +91,7 @@ export default {
       show: true,
     };
   },
-  // 當組件掛載完畢就可以發請求
   mounted() {
-    // 通知Vuex發送請求,獲取數據,存儲於倉庫中
-    this.$store.dispatch("categoryList");
     // 當組件掛載完畢變為false
     // 如果不是home路由組件,就把TypeNav組件隱藏
     if (this.$route.path != "/home") {

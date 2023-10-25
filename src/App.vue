@@ -16,6 +16,11 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  // 當組件掛載完畢就可以發請求
+  mounted(){
+    // 通知Vuex發送請求,獲取數據,存儲於倉庫中
+    this.$store.dispatch("categoryList");
   }
 }
 </script>
