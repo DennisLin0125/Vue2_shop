@@ -6,7 +6,7 @@
       <!-- 事件委派 -->
       <div @mouseleave="leaveShow" @mouseenter="enterShow">
         <h2 class="all">全部商品分類</h2>
-        
+
         <!-- 三級連動 -->
         <!-- 過度動畫 -->
         <transition name="sort">
@@ -143,10 +143,16 @@ export default {
           // 如果是三級分類
           query.category3Id = category3id;
         }
-        // 整理完參數
-        location.query = query;
-        // 跳轉路由
-        this.$router.push(location);
+        
+        if (this.$route.params) {
+          // 如果路由跳轉的時候,帶有 params 參數,也要一起
+          console.log('first')
+          location.params = this.$route.params;
+          // 整理完參數
+          location.query = query;
+          // 跳轉路由
+          this.$router.push(location);
+        }
       }
     },
     enterShow() {
@@ -291,7 +297,7 @@ export default {
 
     // 定義動畫時間
     .sort-enter-active {
-      transition: all .5s linear;
+      transition: all 0.5s linear;
     }
   }
 }
