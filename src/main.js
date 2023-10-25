@@ -4,6 +4,8 @@ import App from './App.vue'
 import TypeNav from '@/components/TypeNav'
 // 註冊為全局組件
 Vue.component(TypeNav.name, TypeNav)
+// 引入mockServe.js
+import '@/mock/mockServe'
 
 // 引入路由
 import router from '@/router'
