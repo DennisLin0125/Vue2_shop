@@ -146,7 +146,6 @@ export default {
         
         if (this.$route.params) {
           // 如果路由跳轉的時候,帶有 params 參數,也要一起
-          console.log('first')
           location.params = this.$route.params;
           // 整理完參數
           location.query = query;

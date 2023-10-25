@@ -93,8 +93,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "ListContainer",
+  // 當組件掛載後發請求
+  mounted() {
+    // 派發action 通知vuex發送ajax 將數據存在倉庫
+    this.$store.dispatch("getBannerList");
+  },
+  computed: {
+    // 右側需要的是一個函數,當使用計算屬性的時候,這個函數會執行一次
+    // state就是大倉庫中的數據
+    ...mapState({ bannerList: (state) => state.homeStore.bannerList }),
+  },
 };
 </script>
 

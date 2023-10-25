@@ -1,4 +1,4 @@
-import { reqCategoryList } from "@/api";
+import { reqCategoryList, reqGetBannerList } from "@/api";
 
 // home的store
 export const homeStore = {
@@ -11,17 +11,29 @@ export const homeStore = {
         commit("CATEGORYLIST", result.data);
       }
     },
+    // 獲取首頁輪播圖數據
+    async getBannerList({ commit }) {
+      let result = await reqGetBannerList();
+      if (result.code == 200) {
+        commit("GETBANNERLIST", result.data);
+      }
+    },
   },
   // 準備mutations用於操作數據(state)
   mutations: {
     CATEGORYLIST(state, categoryList) {
       state.categoryList = categoryList;
     },
+    GETBANNERLIST(state, bannerList) {
+      state.bannerList = bannerList;
+    },
   },
   // 準備state用於存放數據
   state: {
     // 初始值根據服務器返回的數據決定
     categoryList: [],
+    // 輪播圖的初始數據
+    bannerList:[],
   },
   getters: {},
 };
