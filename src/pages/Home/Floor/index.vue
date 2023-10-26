@@ -4,29 +4,15 @@
   <div class="floor">
     <div class="py-container">
       <div class="title clearfix">
-        <h3 class="fl">家用電器</h3>
+        <h3 class="fl">{{ list.name }}</h3>
         <div class="fr">
           <ul class="nav-tabs clearfix">
-            <li class="active">
-              <a href="#tab1" data-toggle="tab">熱門</a>
-            </li>
-            <li>
-              <a href="#tab2" data-toggle="tab">大家電</a>
-            </li>
-            <li>
-              <a href="#tab3" data-toggle="tab">生活電器</a>
-            </li>
-            <li>
-              <a href="#tab4" data-toggle="tab">廚房電器</a>
-            </li>
-            <li>
-              <a href="#tab5" data-toggle="tab">當季電器</a>
-            </li>
-            <li>
-              <a href="#tab6" data-toggle="tab">空氣/淨水</a>
-            </li>
-            <li>
-              <a href="#tab7" data-toggle="tab">高階電器</a>
+            <li
+              class=""
+              v-for="(navList, index) in list.navList"
+              :key="index"
+            >
+              <a href="#tab1" data-toggle="tab">{{ navList.text }}</a>
             </li>
           </ul>
         </div>
@@ -36,20 +22,21 @@
           <div class="floor-1">
             <div class="blockgary">
               <ul class="jd-list">
-                <li>節能補助</li>
-                <li>4K電視</li>
-                <li>空氣清淨機</li>
-                <li>IH電飯煲</li>
-                <li>滾筒洗衣機</li>
-                <li>電熱水器</li>
+                <li v-for="(keyword, index) in list.keywords" :key="index">
+                  {{ keyword }}
+                </li>
               </ul>
-              <img src="./images/floor-1-1.png" />
+              <img :src="list.imgUrl" />
             </div>
             <div class="floorBanner">
-              <div class="swiper-container" id="floor1Swiper">
+              <div class="swiper-container" ref="floor1Swiper">
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b01.png" />
+                  <div
+                    class="swiper-slide"
+                    v-for="carousel in list.carouselList"
+                    :key="carousel.id"
+                  >
+                    <img :src="carousel.imgUrl" />
                   </div>
                 </div>
                 <!-- 如果需要分頁器 -->
@@ -63,22 +50,22 @@
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-2.png" />
+                <img :src="list.recommendList[0]" />
               </div>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-3.png" />
+                <img :src="list.recommendList[1]" />
               </div>
             </div>
             <div class="split center">
-              <img src="./images/floor-1-4.png" />
+              <img :src="list.bigImg" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-5.png" />
+                <img :src="list.recommendList[2]" />
               </div>
               <div class="floor-conver-pit">
-                <img src="./images/floor-1-6.png" />
+                <img :src="list.recommendList[3]" />
               </div>
             </div>
           </div>
@@ -89,10 +76,31 @@
 </template>
 
 <script>
+// 引入swiper
+import Swiper from "swiper";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Floor",
-  props:['list'],
+  props: ["list"],
+  mounted() {
+    let mySwiper = new Swiper(this.$refs.floor1Swiper, {
+      // direction: 'vertical',
+      mousewheel: true,
+      loop: true,
+      // 如果需要分页器
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+
+      // 如果需要前进后退按钮
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  },
 };
 </script>
 
