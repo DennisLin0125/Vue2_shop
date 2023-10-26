@@ -7,8 +7,12 @@
         <!--banner輪播-->
         <div class="swiper-container" id="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div
+              class="swiper-slide"
+              v-for="(carousel) in bannerList"
+              :key="carousel.id"
+            >
+              <img :src="carousel.imgUrl" />
             </div>
           </div>
           <!-- 如果需要分頁器 -->
@@ -94,6 +98,8 @@
 
 <script>
 import { mapState } from "vuex";
+import swiper from "swiper";
+
 export default {
   name: "ListContainer",
   // 當組件掛載後發請求
@@ -105,6 +111,38 @@ export default {
     // 右側需要的是一個函數,當使用計算屬性的時候,這個函數會執行一次
     // state就是大倉庫中的數據
     ...mapState({ bannerList: (state) => state.homeStore.bannerList }),
+  },
+  watch: {
+    // 監聽bannerList數組的變化
+    bannerList: {
+      handler() {
+        // 等頁面組件全部掛載後會執行$nextTick
+        this.$nextTick(() => {
+          let mySwiper = new swiper(".swiper-container", {
+            // direction: 'vertical',
+            mousewheel: true,
+            loop: true,
+            // 如果需要分页器
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+            },
+            enabled: false,
+
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+
+            // 如果需要滚动条
+            // scrollbar: {
+            //     el: '.swiper-scrollbar',
+            // }
+          });
+        });
+      },
+    },
   },
 };
 </script>

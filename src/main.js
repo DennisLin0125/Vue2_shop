@@ -6,7 +6,8 @@ import TypeNav from '@/components/TypeNav'
 Vue.component(TypeNav.name, TypeNav)
 // 引入mockServe.js   
 import '@/mock/mockServe'
-
+// 引入swiper樣式
+import 'swiper/css/swiper.css'
 // 引入路由
 import router from '@/router'
 // 引入store
