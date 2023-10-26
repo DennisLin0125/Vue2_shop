@@ -51,12 +51,6 @@
                   <div class="swiper-slide">
                     <img src="./images/floor-1-b01.png" />
                   </div>
-                  <!-- <div class="swiper-slide">
-                    <img src="./images/floor-1-b02.png" />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src="./images/floor-1-b03.png" />
-                  </div> -->
                 </div>
                 <!-- 如果需要分頁器 -->
                 <div class="swiper-pagination"></div>
@@ -98,6 +92,7 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Floor",
+  props:['list'],
 };
 </script>
 

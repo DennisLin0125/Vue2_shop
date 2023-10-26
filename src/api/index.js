@@ -18,3 +18,11 @@ export const reqGetBannerList = () => {
         method: 'GET',
     })
 }
+
+// 獲取floor數據
+export const reqGetFloorList = () => {
+    return mockRequest({
+        url: '/floor',
+        method: 'GET',
+    })
+}

@@ -9,20 +9,21 @@
     <Recommend />
     <Rank />
     <Like />
-    <Floor />
-    <Floor />
+    <Floor v-for="(floor, index) in floorList" :key="floor.id" :list="floor"/>
     <Brand />
   </div>
 </template>
 
 <script>
 // 引入其餘的組件
-import ListContainer from '@/pages/Home/ListContainer'
-import Recommend from '@/pages/Home/Recommend'
-import Rank from '@/pages/Home/Rank'
-import Like from '@/pages/Home/Like'
-import Floor from '@/pages/Home/Floor'
-import Brand from '@/pages/Home/Brand'
+import ListContainer from "@/pages/Home/ListContainer";
+import Recommend from "@/pages/Home/Recommend";
+import Rank from "@/pages/Home/Rank";
+import Like from "@/pages/Home/Like";
+import Floor from "@/pages/Home/Floor";
+import Brand from "@/pages/Home/Brand";
+
+import { mapState } from "vuex";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -33,7 +34,16 @@ export default {
     Rank,
     Like,
     Floor,
-    Brand
+    Brand,
+  },
+  mounted() {
+    // 派發action
+    this.$store.dispatch("getFloorList");
+  },
+  computed: {
+    ...mapState({
+      floorList: (state) => state.homeStore.floorList,
+    }),
   },
 };
 </script>

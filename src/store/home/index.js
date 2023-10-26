@@ -1,4 +1,4 @@
-import { reqCategoryList, reqGetBannerList } from "@/api";
+import { reqCategoryList, reqGetBannerList, reqGetFloorList } from "@/api";
 
 // home的store
 export const homeStore = {
@@ -18,6 +18,13 @@ export const homeStore = {
         commit("GETBANNERLIST", result.data);
       }
     },
+    // 獲取floor輪播圖數據
+    async getFloorList({ commit }) {
+      let result = await reqGetFloorList();
+      if (result.code == 200) {
+        commit("GETFLOORLIST", result.data);
+      }
+    },
   },
   // 準備mutations用於操作數據(state)
   mutations: {
@@ -27,13 +34,18 @@ export const homeStore = {
     GETBANNERLIST(state, bannerList) {
       state.bannerList = bannerList;
     },
+    GETFLOORLIST(state, floorList) {
+      state.floorList = floorList;
+    }
   },
   // 準備state用於存放數據
   state: {
     // 初始值根據服務器返回的數據決定
     categoryList: [],
     // 輪播圖的初始數據
-    bannerList:[],
+    bannerList: [],
+    // floor初始數據
+    floorList: [],
   },
   getters: {},
 };

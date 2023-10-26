@@ -5,7 +5,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner輪播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container" ref="mySwiper">
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
@@ -118,7 +118,7 @@ export default {
       handler() {
         // 等頁面組件全部掛載後會執行$nextTick
         this.$nextTick(() => {
-          let mySwiper = new swiper(".swiper-container", {
+          let mySwiper = new swiper(this.$refs.mySwiper, {
             // direction: 'vertical',
             mousewheel: true,
             loop: true,
