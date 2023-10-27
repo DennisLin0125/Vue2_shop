@@ -467,6 +467,9 @@ export default {
   components: {
     SearchSelector,
   },
+  mounted(){
+    this.$store.dispatch('getSearchList')
+  }
 };
 </script>
 
