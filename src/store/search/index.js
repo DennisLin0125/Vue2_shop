@@ -23,5 +23,17 @@ export const searchStore = {
     // 初始值
     searchList: {},
   },
-  getters: {},
+  // 計算屬性
+  getters: {
+    // state就是當前倉庫中的state,並非大倉庫的state
+    goodsList(state) {
+      return state.searchList.goodsList || [];
+    },
+    trademarkList(state) {
+      return state.searchList.trademarkList || [];
+    },
+    attrsList(state) {
+      return state.searchList.attrsList || [];
+    },
+  },
 };
