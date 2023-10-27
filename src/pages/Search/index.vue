@@ -131,16 +131,52 @@ import { mapGetters } from "vuex";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Search",
-
+  data() {
+    return {
+      // 帶給服務器的參數
+      searchParams: {
+        // 一級分類ID
+        category1Id: "",
+        // 二級分類ID
+        category2Id: "",
+        // 三級分類ID
+        category3Id: "",
+        // 分類名稱
+        categoryName: "",
+        // 關鍵字
+        keyword: "",
+        // 排序
+        order: "",
+        // 第幾頁
+        pageNo: 1,
+        // 一頁有幾項
+        pageSize: 10,
+        // 平台售賣屬性
+        props: [],
+        // 品牌
+        trademark: "",
+      },
+    };
+  },
   components: {
     SearchSelector,
   },
+  beforeMount() {
+    // 當組件掛載完畢之前先拿到數據
+    Object.assign(this.searchParams, this.$route.query, this.$route.params);
+  },
   mounted() {
-    this.$store.dispatch("getSearchList");
+    this.getData();
   },
   computed: {
     // 裡面參數要傳數組
     ...mapGetters(["goodsList", "trademarkList", "attrsList"]),
+  },
+  methods: {
+    // 向服務器發請求獲取數據
+    getData() {
+      this.$store.dispatch("getSearchList", this.searchParams);
+    },
   },
 };
 </script>
