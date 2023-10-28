@@ -170,7 +170,7 @@ export default {
   },
   computed: {
     // 裡面參數要傳數組
-    ...mapGetters(["goodsList", "trademarkList", "attrsList"]),
+    ...mapGetters(["goodsList"]),
   },
   methods: {
     // 向服務器發請求獲取數據

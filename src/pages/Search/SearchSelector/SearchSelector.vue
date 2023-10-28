@@ -4,24 +4,9 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li>Sony（SONY）</li>
-          <li>TCL</li>
-          <li>長虹（CHANGHONG）</li>
-          <li>飛利浦（PHILIPS）</li>
-          <li>風行電視</li>
-          <li><img src="./images/phone06.png" /></li>
-          <li><img src="./images/phone07.png" /></li>
-          <li><img src="./images/phone08.png" /></li>
-          <li><img src="./images/phone09.png" /></li>
-          <li><img src="./images/phone10.png" /></li>
-          <li><img src="./images/phone11.png" /></li>
-          <li><img src="./images/phone12.png" /></li>
-          <li><img src="./images/phone12.png" /></li>
-          <li><img src="./images/phone14.png" /></li>
-          <li><img src="./images/phone01.png" /></li>
-          <li><img src="./images/phone06.png" /></li>
-          <li><img src="./images/phone07.png" /></li>
-          <li><img src="./images/phone02.png" /></li>
+          <li v-for="trademark in trademarkList" :key="trademark.tmId">
+            {{ trademark.tmName }}
+          </li>
         </ul>
       </div>
       <div class="ext">
@@ -29,125 +14,12 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
-    <div class="type-wrap">
-      <div class="fl key">網路製式</div>
+    <div class="type-wrap" v-for="attrs in attrsList" :key="attrs.attrId">
+      <div class="fl key">{{ attrs.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li>
-            <a>GSM（移動/聯通2G）</a>
-          </li>
-          <li>
-            <a>電信2G</a>
-          </li>
-          <li>
-            <a>電信3G</a>
-          </li>
-          <li>
-            <a>移動3G</a>
-          </li>
-          <li>
-            <a>聯通3G</a>
-          </li>
-          <li>
-            <a>聯通4G</a>
-          </li>
-          <li>
-            <a>電信3G</a>
-          </li>
-          <li>
-            <a>移動3G</a>
-          </li>
-          <li>
-            <a>聯通3G</a>
-          </li>
-          <li>
-            <a>聯通4G</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">顯示器尺寸</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>4.0-4.9吋</a>
-          </li>
-          <li>
-            <a>4.0-4.9吋</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">相機像素</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>1200萬以上</a>
-          </li>
-          <li>
-            <a>800-1199萬</a>
-          </li>
-          <li>
-            <a>1200-1599萬</a>
-          </li>
-          <li>
-            <a>1600萬以上</a>
-          </li>
-          <li>
-            <a>無相機</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">價</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>0-500元</a>
-          </li>
-          <li>
-            <a>500-1000元</a>
-          </li>
-          <li>
-            <a>1000-1500元</a>
-          </li>
-          <li>
-            <a>1500-2000元</a>
-          </li>
-          <li>
-            <a>2000-3000元 </a>
-          </li>
-          <li>
-            <a>3000元以上</a>
-          </li>
-        </ul>
-      </div>
-      <div class="fl ext"></div>
-    </div>
-    <div class="type-wrap">
-      <div class="fl key">更多篩選項</div>
-      <div class="fl value">
-        <ul class="type-list">
-          <li>
-            <a>特點</a>
-          </li>
-          <li>
-            <a>系統</a>
-          </li>
-          <li>
-            <a>手機內存 </a>
-          </li>
-          <li>
-            <a>單卡雙卡</a>
-          </li>
-          <li>
-            <a>其他</a>
+          <li v-for="(attrValue, index) in attrs.attrValueList" :key="index">
+            <a>{{ attrValue }}</a>
           </li>
         </ul>
       </div>
@@ -157,8 +29,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "SearchSelector",
+  computed: {
+    ...mapGetters(["trademarkList", "attrsList"]),
+  },
 };
 </script>
 
