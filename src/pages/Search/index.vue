@@ -46,7 +46,7 @@
             <div class="navbar-inner filter">
               <!-- 排序結構 -->
               <ul class="sui-nav">
-                <li :class="{ active: isOne }">
+                <li :class="{ active: isOne }" @click="changeOrder('1')">
                   <a
                     >綜合
                     <span
@@ -57,7 +57,7 @@
                     </span>
                   </a>
                 </li>
-                <li :class="{ active: isTwo }">
+                <li :class="{ active: isTwo }" @click="changeOrder('2')">
                   <a
                     >價格
                     <span
@@ -281,6 +281,25 @@ export default {
         // 發送請求
         this.getData();
       }
+    },
+    // 1
+    changeOrder(flag) {
+      let originFlag = this.searchParams.order.split(":")[0];
+      let originSort = this.searchParams.order.split(":")[1];
+      // 準備一個新的屬性值
+      let newOrder = "";
+
+      if (flag == originFlag) {
+        // 點擊的是同一個位置,就改變排序
+        newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        // 設定初始狀態為降序(desc)
+        newOrder = `${flag}:desc`;
+      }
+      // 重新賦值
+      this.searchParams.order = newOrder;
+      // 發請求
+      this.getData();
     },
   },
   watch: {
