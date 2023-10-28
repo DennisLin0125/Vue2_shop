@@ -3,8 +3,13 @@
     <div class="type-wrap logo">
       <div class="fl key brand">品牌</div>
       <div class="value logos">
+        <!-- 品牌地方 -->
         <ul class="logo-list">
-          <li v-for="trademark in trademarkList" :key="trademark.tmId">
+          <li
+            v-for="trademark in trademarkList"
+            :key="trademark.tmId"
+            @click="trademarkHandler(trademark)"
+          >
             {{ trademark.tmName }}
           </li>
         </ul>
@@ -34,6 +39,12 @@ export default {
   name: "SearchSelector",
   computed: {
     ...mapGetters(["trademarkList", "attrsList"]),
+  },
+  methods: {
+    trademarkHandler(trademark) {
+      // 觸發自訂義事件 (子給父傳數據)
+      this.$emit("trademarkInfo", trademark);
+    },
   },
 };
 </script>
@@ -97,6 +108,9 @@ export default {
           img {
             max-width: 100%;
             vertical-align: middle;
+          }
+          &:hover {
+            cursor: pointer;
           }
         }
       }

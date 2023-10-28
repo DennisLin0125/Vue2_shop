@@ -19,11 +19,16 @@
             <li class="with-x" v-if="searchParams.keyword">
               {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
             </li>
+            <!-- 品牌訊息的麵包屑 -->
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ searchParams.trademark.split(':')[1] }}<i @click="removeTrademark">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector />
+        <!-- 利用自訂義事件讓子組件和父組件通訊 -->
+        <SearchSelector @trademarkInfo="trademarkInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -193,26 +198,39 @@ export default {
       // 清空URL
       if (this.$route.params) {
         this.$router.push({
-          name:'search',
-          params: this.$route.params
-        })
+          name: "search",
+          params: this.$route.params,
+        });
       }
     },
     // 刪除麵包屑的關鍵字
-    removeKeyword (){
+    removeKeyword() {
       this.searchParams.keyword = undefined;
       // 發請求
       this.getData();
       // 通知兄弟組件Header將搜索框內清空
-      this.$bus.$emit('clearKeyword');
+      this.$bus.$emit("clearKeyword");
       // // 清空URL
       if (this.$route.query) {
         this.$router.push({
-          name:'search',
-          query: this.$route.query
-        })
+          name: "search",
+          query: this.$route.query,
+        });
       }
-    }
+    },
+    // 刪除品牌訊息的麵包屑
+    removeTrademark(){
+      this.searchParams.trademark = undefined;
+      // 發請求
+      this.getData();
+    },
+    // 自訂義事件回調函數
+    trademarkInfo(trademark) {
+      // 整理品牌參數
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      // 發送ajax
+      this.getData()
+    },
   },
   watch: {
     // 監聽路由的變化再次發送請求獲取數據
