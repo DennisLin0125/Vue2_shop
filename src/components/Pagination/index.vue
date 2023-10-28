@@ -11,10 +11,10 @@
     <button>7</button>
 
     <button>···</button>
-    <button>9</button>
+    <button>{{ totalPage }}</button>
     <button>下一頁</button>
 
-    <button style="margin-left: 30px">共 60 條</button>
+    <button style="margin-left: 30px">共 {{ total }} 條</button>
   </div>
 </template>
 
@@ -22,6 +22,36 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Pagination",
+  props: ["pageNo", "", "pageSize", "total", "continuous"],
+  computed: {
+    // 計算總共多少頁
+    totalPage() {
+      // 向上取整數
+      return Math.ceil(this.total / this.pageSize);
+    },
+    // 計算開始與結束的數字
+    startNumAndEndNum() {
+      let start = 0;
+      let end = 0;
+      const { continuous, total, pageNo, totalPage } = this;
+      if (continuous > total) {
+        start = 1;
+        end = total;
+      } else {
+        start = pageNo - parseInt(continuous / 2);
+        end = pageNo + parseInt(continuous / 2);
+
+        if (start < 1) {
+          start = 1;
+          end = continuous;
+        } else if (end > totalPage) {
+          start = totalPage - continuous + 1;
+          end = totalPage;
+        }
+      }
+      return { start, end };
+    },
+  },
 };
 </script>
 
