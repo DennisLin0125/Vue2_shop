@@ -21,14 +21,20 @@
             </li>
             <!-- 品牌訊息的麵包屑 -->
             <li class="with-x" v-if="searchParams.trademark">
-              {{ searchParams.trademark.split(':')[1] }}<i @click="removeTrademark">×</i>
+              {{ searchParams.trademark.split(":")[1] }}
+              <i @click="removeTrademark">×</i>
+            </li>
+            <!-- 平台屬性的麵包屑 -->
+            <li class="with-x" v-for="(prop,index) in searchParams.props" :key="index">
+              {{ prop.split(':')[1] }}
+              <i @click="removeProps(index)">×</i>
             </li>
           </ul>
         </div>
 
         <!--selector-->
         <!-- 利用自訂義事件讓子組件和父組件通訊 -->
-        <SearchSelector @trademarkInfo="trademarkInfo" />
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -219,8 +225,15 @@ export default {
       }
     },
     // 刪除品牌訊息的麵包屑
-    removeTrademark(){
+    removeTrademark() {
       this.searchParams.trademark = undefined;
+      // 發請求
+      this.getData();
+    },
+    // 刪除平台屬性的麵包屑
+    removeProps(index){
+      // 從陣列props刪除點到的對應數值
+      this.searchParams.props.splice(index,1);
       // 發請求
       this.getData();
     },
@@ -229,7 +242,18 @@ export default {
       // 整理品牌參數
       this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
       // 發送ajax
-      this.getData()
+      this.getData();
+    },
+    // 自訂義事件收集平台屬性的回調函數
+    attrInfo(attrs, attrValue) {
+      // 整理品牌參數
+      let props = `${attrs.attrId}:${attrValue}:${attrs.attrName}`;
+      // 陣列去重複
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props);
+        // 發送請求
+        this.getData();
+      }
     },
   },
   watch: {

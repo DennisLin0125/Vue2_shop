@@ -19,11 +19,18 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
+    <!-- 平台售賣屬性的地方 -->
     <div class="type-wrap" v-for="attrs in attrsList" :key="attrs.attrId">
+      <!-- 平台售賣屬性: ex:顏色... -->
       <div class="fl key">{{ attrs.attrName }}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue, index) in attrs.attrValueList" :key="index">
+          <!-- 平台售賣屬性的值: ex:紅色... -->
+          <li
+            v-for="(attrValue, index) in attrs.attrValueList"
+            :key="index"
+            @click="attrInfo(attrs, attrValue)"
+          >
             <a>{{ attrValue }}</a>
           </li>
         </ul>
@@ -44,6 +51,11 @@ export default {
     trademarkHandler(trademark) {
       // 觸發自訂義事件 (子給父傳數據)
       this.$emit("trademarkInfo", trademark);
+    },
+    // 平台售賣屬性的值
+    attrInfo(attrs, attrValue) {
+      // 觸發自訂義事件 (子給父傳數據)
+      this.$emit("attrInfo", attrs, attrValue);
     },
   },
 };
@@ -125,6 +137,10 @@ export default {
           a {
             text-decoration: none;
             color: #666;
+          }
+
+          &:hover {
+            cursor: pointer;
           }
         }
       }
