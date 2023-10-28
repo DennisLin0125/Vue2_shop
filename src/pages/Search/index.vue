@@ -11,10 +11,9 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x">手機</li>
-            <li class="with-x">iphone<i>×</i></li>
-            <li class="with-x">華為<i>×</i></li>
-            <li class="with-x">OPPO<i>×</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName }}<i @click="removeCategory">×</i>
+            </li>
           </ul>
         </div>
 
@@ -177,6 +176,23 @@ export default {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
+    // 刪除分類的名字
+    removeCategory() {
+      // 每次請求完畢應該要把category1Id category2Id category3Id 清空
+      // undefined為了不把參數傳給server
+      this.searchParams.categoryName = undefined;
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
+      this.getData();
+      // 清空URL
+      if (this.$route.params) {
+        this.$router.push({
+          name:'search',
+          params: this.$route.params
+        })
+      }
+    },
   },
   watch: {
     // 監聽路由的變化再次發送請求獲取數據
@@ -186,9 +202,9 @@ export default {
       // 發送ajax
       this.getData();
       // 每次請求完畢應該要把category1Id category2Id category3Id 清空
-      this.searchParams.category1Id = "";
-      this.searchParams.category2Id = "";
-      this.searchParams.category3Id = "";
+      this.searchParams.category1Id = undefined;
+      this.searchParams.category2Id = undefined;
+      this.searchParams.category3Id = undefined;
     },
   },
 };
