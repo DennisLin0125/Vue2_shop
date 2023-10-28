@@ -178,6 +178,19 @@ export default {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
   },
+  watch: {
+    // 監聽路由的變化再次發送請求獲取數據
+    $route(newValue, oldValue) {
+      // 發請求前先整理數據
+      Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      // 發送ajax
+      this.getData();
+      // 每次請求完畢應該要把category1Id category2Id category3Id 清空
+      this.searchParams.category1Id = "";
+      this.searchParams.category2Id = "";
+      this.searchParams.category3Id = "";
+    },
+  },
 };
 </script>
 
