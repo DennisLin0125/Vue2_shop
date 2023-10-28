@@ -76,12 +76,18 @@ export default {
       if (this.$route.query) {
         let location = {
           name: "search",
-          params: { keyword: this.keyword || undefined }
-        }
+          params: { keyword: this.keyword || undefined },
+        };
         location.query = this.$route.query;
-        this.$router.push(location)
+        this.$router.push(location);
       }
     },
+  },
+  mounted() {
+    // 清除關鍵字
+    this.$bus.$on("clearKeyword", () => {
+      this.keyword = "";
+    });
   },
 };
 </script>

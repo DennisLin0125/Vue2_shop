@@ -11,8 +11,13 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
+            <!-- 分類的麵包屑 -->
             <li class="with-x" v-if="searchParams.categoryName">
               {{ searchParams.categoryName }}<i @click="removeCategory">×</i>
+            </li>
+            <!-- 關鍵字的麵包屑 -->
+            <li class="with-x" v-if="searchParams.keyword">
+              {{ searchParams.keyword }}<i @click="removeKeyword">×</i>
             </li>
           </ul>
         </div>
@@ -176,7 +181,7 @@ export default {
     getData() {
       this.$store.dispatch("getSearchList", this.searchParams);
     },
-    // 刪除分類的名字
+    // 刪除麵包屑分類的名字
     removeCategory() {
       // 每次請求完畢應該要把category1Id category2Id category3Id 清空
       // undefined為了不把參數傳給server
@@ -193,6 +198,21 @@ export default {
         })
       }
     },
+    // 刪除麵包屑的關鍵字
+    removeKeyword (){
+      this.searchParams.keyword = undefined;
+      // 發請求
+      this.getData();
+      // 通知兄弟組件Header將搜索框內清空
+      this.$bus.$emit('clearKeyword');
+      // // 清空URL
+      if (this.$route.query) {
+        this.$router.push({
+          name:'search',
+          query: this.$route.query
+        })
+      }
+    }
   },
   watch: {
     // 監聽路由的變化再次發送請求獲取數據

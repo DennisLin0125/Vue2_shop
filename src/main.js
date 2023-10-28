@@ -22,4 +22,8 @@ new Vue({
   router,
   // 註冊store,這時候所有組件都會多$store屬性
   store,
+  // 註冊全局總線 
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
 }).$mount('#app')
