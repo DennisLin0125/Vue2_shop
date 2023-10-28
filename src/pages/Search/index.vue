@@ -114,7 +114,13 @@
             </ul>
           </div>
           <!-- 分頁器 -->
-          <Pagination :pageNo="31" :pageSize="3" :total="91" :continuous="5"/>
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="getTotal"
+            :continuous="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -167,7 +173,7 @@ export default {
   },
   computed: {
     // 裡面參數要傳數組
-    ...mapGetters(["goodsList"]),
+    ...mapGetters(["goodsList", "getTotal"]),
     isOne() {
       return this.searchParams.order.indexOf("1") != -1;
     },
@@ -249,7 +255,14 @@ export default {
         this.getData();
       }
     },
-    // 1
+    // 自訂義事件獲取當前第幾頁回調函數
+    getPageNo(pageNo){
+      // 整理參數
+      this.searchParams.pageNo=pageNo
+      // 發送請求
+      this.getData()
+    },
+    // 改變排序的回調
     changeOrder(flag) {
       let originFlag = this.searchParams.order.split(":")[0];
       let originSort = this.searchParams.order.split(":")[1];

@@ -35,5 +35,8 @@ export const searchStore = {
     attrsList(state) {
       return state.searchList.attrsList || [];
     },
+    getTotal(state){
+      return state.searchList.total
+    }
   },
 };
