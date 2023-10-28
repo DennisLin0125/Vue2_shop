@@ -68,12 +68,6 @@
                     </span>
                   </a>
                 </li>
-                <!-- <li>
-                  <a href="#">價格⬆</a>
-                </li>
-                <li>
-                  <a href="#">價錢⬇</a>
-                </li> -->
               </ul>
             </div>
           </div>
@@ -119,35 +113,8 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一頁</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一頁»</a>
-                </li>
-              </ul>
-              <div><span>共10頁&nbsp;</span></div>
-            </div>
-          </div>
+          <!-- 分頁器 -->
+          <Pagination />
         </div>
       </div>
     </div>
