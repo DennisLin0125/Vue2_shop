@@ -25,8 +25,12 @@
               <i @click="removeTrademark">×</i>
             </li>
             <!-- 平台屬性的麵包屑 -->
-            <li class="with-x" v-for="(prop,index) in searchParams.props" :key="index">
-              {{ prop.split(':')[1] }}
+            <li
+              class="with-x"
+              v-for="(prop, index) in searchParams.props"
+              :key="index"
+            >
+              {{ prop.split(":")[1] }}
               <i @click="removeProps(index)">×</i>
             </li>
           </ul>
@@ -40,25 +44,36 @@
         <div class="details clearfix">
           <div class="sui-navbar">
             <div class="navbar-inner filter">
+              <!-- 排序結構 -->
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">綜合</a>
+                <li :class="{ active: isOne }">
+                  <a
+                    >綜合
+                    <span
+                      v-show="isOne"
+                      class="iconfont"
+                      :class="{ 'icon-UP': isAsc, 'icon-DOWN': isDesc }"
+                    >
+                    </span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">銷量</a>
+                <li :class="{ active: isTwo }">
+                  <a
+                    >價格
+                    <span
+                      v-show="isTwo"
+                      class="iconfont"
+                      :class="{ 'icon-UP': isAsc, 'icon-DOWN': isDesc }"
+                    >
+                    </span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">評價</a>
-                </li>
-                <li>
+                <!-- <li>
                   <a href="#">價格⬆</a>
                 </li>
                 <li>
                   <a href="#">價錢⬇</a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -160,8 +175,8 @@ export default {
         categoryName: "",
         // 關鍵字
         keyword: "",
-        // 排序
-        order: "",
+        // 排序  初始:降序
+        order: "1:desc",
         // 第幾頁
         pageNo: 1,
         // 一頁有幾項
@@ -186,6 +201,18 @@ export default {
   computed: {
     // 裡面參數要傳數組
     ...mapGetters(["goodsList"]),
+    isOne() {
+      return this.searchParams.order.indexOf("1") != -1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf("2") != -1;
+    },
+    isDesc() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
+    isAsc() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
   },
   methods: {
     // 向服務器發請求獲取數據
@@ -231,9 +258,9 @@ export default {
       this.getData();
     },
     // 刪除平台屬性的麵包屑
-    removeProps(index){
+    removeProps(index) {
       // 從陣列props刪除點到的對應數值
-      this.searchParams.props.splice(index,1);
+      this.searchParams.props.splice(index, 1);
       // 發請求
       this.getData();
     },
