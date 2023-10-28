@@ -114,7 +114,7 @@
             </ul>
           </div>
           <!-- 分頁器 -->
-          <Pagination :pageNo="1" :pageSize="3" :total="91" :continuous="5"/>
+          <Pagination :pageNo="31" :pageSize="3" :total="91" :continuous="5"/>
         </div>
       </div>
     </div>
