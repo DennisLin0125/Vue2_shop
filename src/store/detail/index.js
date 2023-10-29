@@ -31,7 +31,7 @@ export const detailStore = {
       return state.goodsInfo.skuInfo || {};
     },
     spuSaleAttrList(state) {
-      return state.goodsInfo.spuSaleAttrList || {};
+      return state.goodsInfo.spuSaleAttrList || [];
     },
   },
 };
