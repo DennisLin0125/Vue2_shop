@@ -28,19 +28,6 @@ export const reqGetFloorList = () => {
 };
 
 // 獲取搜索模塊數據   /api/list   POST
-/**
- * {
-  "category3Id": "61",
-  "categoryName": "手机",
-  "keyword": "小米",
-  "order": "1:desc",
-  "pageNo": 1,
-  "pageSize": 10,
-  "props": ["1:1700-2799:价格", "2:6.65-6.74英寸:屏幕尺寸"],
-  "trademark": "4:小米"
-}
-
- */
 export const reqGetSearchInfo = (params) => {
   return request({
     url: "/list",
@@ -48,3 +35,11 @@ export const reqGetSearchInfo = (params) => {
     data: params,
   });
 };
+
+// 獲取產品詳細訊息  /api/item/{skuID}  GET
+export const reqGoodsInfo = (skuID) => {
+  return request({
+    url: `/item/${skuID}`,
+    method: "GET",
+  });
+}

@@ -5,11 +5,13 @@ Vue.use(Vuex);
 
 import { homeStore } from "./home";
 import { searchStore } from "./search";
+import { detailStore } from "./detail";
 
 //建立並揭露store
 export default new Vuex.Store({
   modules: {
     homeStore,
     searchStore,
+    detailStore,
   },
 });
