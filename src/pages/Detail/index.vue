@@ -84,6 +84,9 @@
                   :class="{ active: spuSaleAttrValue.isChecked == 1 }"
                   v-for="spuSaleAttrValue in spuSale.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
+                  @click="
+                    changeActive(spuSaleAttrValue, spuSale.spuSaleAttrValueList)
+                  "
                 >
                   {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
@@ -358,6 +361,17 @@ export default {
       return this.skuInfo.skuImageList || [];
     },
   },
+  methods: {
+    // 產品售賣屬性高亮 (排他)
+    changeActive(SaleAttrValue, SaleAttrValueList) {
+      // 遍歷所有陣列,並清除高亮
+      SaleAttrValueList.forEach((item) => {
+        item.isChecked = 0;
+      });
+      // 點到的那個要有高亮
+      SaleAttrValue.isChecked = 1;
+    },
+  },
 };
 </script>
 
@@ -514,6 +528,10 @@ export default {
                 border-right: 1px solid #bbb;
                 border-bottom: 1px solid #bbb;
                 border-left: 1px solid #eee;
+
+                &:hover {
+                  cursor: pointer;
+                }
 
                 &.active {
                   color: green;
