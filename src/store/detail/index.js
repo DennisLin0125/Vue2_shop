@@ -23,5 +23,15 @@ export const detailStore = {
     goodsInfo: {},
   },
   // 計算屬性
-  getters: {},
+  getters: {
+    categoryView(state) {
+      return state.goodsInfo.categoryView || {};
+    },
+    skuInfo(state) {
+      return state.goodsInfo.skuInfo || {};
+    },
+    spuSaleAttrList(state) {
+      return state.goodsInfo.spuSaleAttrList || {};
+    },
+  },
 };

@@ -1,35 +1,36 @@
 <template>
   <div class="detail">
-    <!-- 商品分类导航 -->
+    <!-- 商品分類導航 -->
     <TypeNav />
 
-    <!-- 主要内容区域 -->
+    <!-- 主要內容區域 -->
     <section class="con">
-      <!-- 导航路径区域 -->
+      <!-- 導航路徑區域 -->
       <div class="conPoin">
-        <span>手机、数码、通讯</span>
-        <span>手机</span>
-        <span>Apple苹果</span>
-        <span>iphone 6S系类</span>
+        <span v-show="categoryView.category1Name">{{
+          categoryView.category1Name
+        }}</span>
+        <span v-show="categoryView.category2Name">{{
+          categoryView.category2Name
+        }}</span>
+        <span v-show="categoryView.category3Name">{{
+          categoryView.category3Name
+        }}</span>
       </div>
-      <!-- 主要内容区域 -->
+      <!-- 主要內容區域 -->
       <div class="mainCon">
-        <!-- 左侧放大镜区域 -->
+        <!-- 左側放大鏡區域 -->
         <div class="previewWrap">
-          <!--放大镜效果-->
-          <Zoom />
-          <!-- 小图列表 -->
+          <!--放大鏡效果-->
+          <Zoom :skuImageList="skuImageList" />
+          <!-- 小圖列表 -->
           <ImageList />
         </div>
-        <!-- 右侧选择区域布局 -->
+        <!-- 右側選擇區域佈局 -->
         <div class="InfoWrap">
           <div class="goodsDetail">
-            <h3 class="InfoName">
-              Apple iPhone 6s（A1700）64G玫瑰金色 移动通信电信4G手机
-            </h3>
-            <p class="news">
-              推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返
-            </p>
+            <h3 class="InfoName">{{ skuInfo.skuName }}</h3>
+            <p class="news">{{ skuInfo.skuDesc }}</p>
             <div class="priceArea">
               <div class="priceArea1">
                 <div class="title">
@@ -37,7 +38,7 @@
                 </div>
                 <div class="price">
                   <i>¥</i>
-                  <em>5299</em>
+                  <em>{{ skuInfo.price }}</em>
                   <span>降价通知</span>
                 </div>
                 <div class="remark">
@@ -116,7 +117,7 @@
       </div>
     </section>
 
-    <!-- 内容详情页 -->
+    <!-- 內容詳情頁 -->
     <section class="product-detail">
       <aside class="aside">
         <div class="tabWraped">
@@ -350,16 +351,25 @@
 import ImageList from "./ImageList/ImageList";
 import Zoom from "./Zoom/Zoom";
 
+import { mapGetters } from "vuex";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Detail",
   mounted() {
     // 組件掛載完畢即可通知Vuex獲取數據
-    this.$store.dispatch('getGoodsInfo',this.$route.params.skuId)
+    this.$store.dispatch("getGoodsInfo", this.$route.params.skuId);
   },
   components: {
     ImageList,
     Zoom,
+  },
+  computed: {
+    ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
+    // 給子組件的數據
+    skuImageList() {
+      return this.skuInfo.skuImageList || [];
+    },
   },
 };
 </script>
