@@ -43,3 +43,11 @@ export const reqGoodsInfo = (skuID) => {
     method: "GET",
   });
 }
+
+// 將產品添加到購物車 /api/cart/addToCart/{skuID}/{skuNum}  POST
+export const reqAddOrUpdateShopCart = (skuID,skuNum)=>{
+  return request({
+    url: `/cart/addToCart/${skuID}/${skuNum}`,
+    method: "POST",
+  });
+}

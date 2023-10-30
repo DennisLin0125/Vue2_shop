@@ -100,7 +100,7 @@
                   v-model="skuNum"
                   @change="changeSkuNum"
                 />
-                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a class="plus" @click="skuNum++">+</a>
                 <a
                   href="javascript:"
                   class="mins"
@@ -109,7 +109,7 @@
                 >
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addShopCar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -397,6 +397,14 @@ export default {
         this.skuNum = parseInt(value);
       }
     },
+    // 加入購物車的回調函數
+    addShopCar(){
+      // 派發action通知Vuex發請求獲取資料
+      this.$store.dispatch('addOrUpdateShopCart',{
+        skuId: this.$route.params.skuId,
+        skuNum: this.skuNum
+      })
+    }
   },
 };
 </script>
