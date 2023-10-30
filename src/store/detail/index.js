@@ -15,19 +15,16 @@ export const detailStore = {
     async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
       let result = await reqAddOrUpdateShopCart(skuId, skuNum);
       if (result.code == 200) {
-        console.log(result)
-        // commit("ADDORUPDATESHOPCART", result.data);
+        return Promise.resolve('ok');
       }
-    }
+      return Promise.reject(new Error('failed'));
+    },
   },
   // 準備mutations用於操作數據(state)
   mutations: {
     GETGOODSINFO(state, goodsInfo) {
       state.goodsInfo = goodsInfo;
     },
-    ADDORUPDATESHOPCART(state, goodsInfo){
-      state.goodsInfo = goodsInfo;
-    }
   },
   // 準備state用於存放數據
   state: {

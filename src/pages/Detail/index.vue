@@ -398,13 +398,19 @@ export default {
       }
     },
     // 加入購物車的回調函數
-    addShopCar(){
+    async addShopCar() {
       // 派發action通知Vuex發請求獲取資料
-      this.$store.dispatch('addOrUpdateShopCart',{
-        skuId: this.$route.params.skuId,
-        skuNum: this.skuNum
-      })
-    }
+      try {
+          await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: this.$route.params.skuId,
+          skuNum: this.skuNum,
+        });
+        // 路由跳轉
+        
+      } catch (error) {
+        alert(error.message)
+      }
+    },
   },
 };
 </script>
