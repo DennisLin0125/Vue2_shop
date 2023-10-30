@@ -94,9 +94,19 @@
             </div>
             <div class="cartWrap">
               <div class="controls">
-                <input autocomplete="off" class="itxt" />
-                <a href="javascript:" class="plus">+</a>
-                <a href="javascript:" class="mins">-</a>
+                <input
+                  autocomplete="off"
+                  class="itxt"
+                  v-model="skuNum"
+                  @change="changeSkuNum"
+                />
+                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a
+                  href="javascript:"
+                  class="mins"
+                  @click="skuNum > 1 ? skuNum-- : 1"
+                  >-</a
+                >
               </div>
               <div class="add">
                 <a href="javascript:">加入购物车</a>
@@ -346,6 +356,12 @@ import { mapGetters } from "vuex";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Detail",
+  data() {
+    return {
+      // 客戶的購買產品個數
+      skuNum: 1,
+    };
+  },
   mounted() {
     // 組件掛載完畢即可通知Vuex獲取數據
     this.$store.dispatch("getGoodsInfo", this.$route.params.skuId);
@@ -370,6 +386,16 @@ export default {
       });
       // 點到的那個要有高亮
       SaleAttrValue.isChecked = 1;
+    },
+    // 表單元素修改產品的個數
+    changeSkuNum(event) {
+      let value = event.target.value * 1;
+      // 如果用戶輸入的不是數字
+      if (isNaN(value) || value < 1) {
+        this.skuNum = 1;
+      } else {
+        this.skuNum = parseInt(value);
+      }
     },
   },
 };
