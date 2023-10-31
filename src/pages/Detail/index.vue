@@ -406,9 +406,15 @@ export default {
           skuNum: this.skuNum,
         });
         // 路由跳轉
-        this.$router.push({name:'addcartsuccess'});
+        // 還要帶訊息給下一級組件
+        // 簡單訊息用query參數,複雜的用sessionStore,需存字串
+        sessionStorage.setItem("SKUINFO", JSON.stringify(this.skuInfo));
+        this.$router.push({
+          name: "addcartsuccess",
+          query: { skuNum: this.skuNum },
+        });
       } catch (error) {
-        alert(error.message)
+        alert(error.message);
       }
     },
   },
