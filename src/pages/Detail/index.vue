@@ -401,12 +401,12 @@ export default {
     async addShopCar() {
       // 派發action通知Vuex發請求獲取資料
       try {
-          await this.$store.dispatch("addOrUpdateShopCart", {
+        await this.$store.dispatch("addOrUpdateShopCart", {
           skuId: this.$route.params.skuId,
           skuNum: this.skuNum,
         });
         // 路由跳轉
-        
+        this.$router.push({name:'addcartsuccess'});
       } catch (error) {
         alert(error.message)
       }

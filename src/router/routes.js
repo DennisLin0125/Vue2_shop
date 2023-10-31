@@ -4,6 +4,7 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Search from "@/pages/Search";
 import Detail from "@/pages/Detail"
+import AddCartSuccess from '@/pages/AddCartSuccess'
 
 // 路由配置訊息
 export default [
@@ -43,6 +44,14 @@ export default [
         name: "search",
         path: "/search/:keyword?",
         component: Search,
+        meta: {
+            show: true,
+        },
+    },
+    {
+        name: "addcartsuccess",
+        path: "/addcartsuccess",
+        component: AddCartSuccess,
         meta: {
             show: true,
         },
