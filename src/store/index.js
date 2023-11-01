@@ -6,6 +6,7 @@ Vue.use(Vuex);
 import { homeStore } from "./home";
 import { searchStore } from "./search";
 import { detailStore } from "./detail";
+import { shopCartStore } from "./shopcart";
 
 //建立並揭露store
 export default new Vuex.Store({
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     homeStore,
     searchStore,
     detailStore,
+    shopCartStore,
   },
 });

@@ -45,9 +45,17 @@ export const reqGoodsInfo = (skuID) => {
 }
 
 // 將產品添加到購物車 /api/cart/addToCart/{skuID}/{skuNum}  POST
-export const reqAddOrUpdateShopCart = (skuID,skuNum)=>{
+export const reqAddOrUpdateShopCart = (skuID, skuNum) => {
   return request({
     url: `/cart/addToCart/${skuID}/${skuNum}`,
     method: "POST",
+  });
+}
+
+// 獲取購物車數據列表  /api/cart/cartList   GET
+export const reqGetCartList = () => {
+  return request({
+    url: "/cart/cartList",
+    method: "GET",
   });
 }

@@ -1,5 +1,7 @@
 // Detail 的store
 import { reqGoodsInfo, reqAddOrUpdateShopCart } from "@/api";
+// 封裝臨時遊客身分的模組
+import { getUUID } from "@/utils/uuid_token";
 
 export const detailStore = {
   // 準備actions用於響應組件中的動作
@@ -15,9 +17,9 @@ export const detailStore = {
     async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
       let result = await reqAddOrUpdateShopCart(skuId, skuNum);
       if (result.code == 200) {
-        return Promise.resolve('ok');
+        return Promise.resolve("ok");
       }
-      return Promise.reject(new Error('failed'));
+      return Promise.reject(new Error("failed"));
     },
   },
   // 準備mutations用於操作數據(state)
@@ -30,6 +32,8 @@ export const detailStore = {
   state: {
     // 初始值
     goodsInfo: {},
+    // 遊客的臨時身分
+    uuid_token: getUUID(),
   },
   // 計算屬性
   getters: {
