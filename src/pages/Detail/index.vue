@@ -625,6 +625,9 @@ export default {
 
               .plus {
                 right: -8px;
+                &:hover{
+                  cursor: pointer;
+                }
               }
             }
 
@@ -639,6 +642,9 @@ export default {
                 height: 36px;
                 line-height: 36px;
                 display: block;
+                &:hover{
+                  cursor: pointer;
+                }
               }
             }
           }
