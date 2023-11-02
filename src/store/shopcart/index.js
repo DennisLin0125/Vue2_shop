@@ -23,5 +23,9 @@ export const shopCartStore = {
     shopCartList: [],
   },
   // 計算屬性
-  getters: {},
+  getters: {
+    cartList(state){
+      return state.shopCartList[0]||{};
+    }
+  },
 };
