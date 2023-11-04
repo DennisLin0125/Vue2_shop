@@ -31,15 +31,26 @@
             <span class="price">{{ cartList.skuPrice }}.00</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
+            <a
+              href="javascript:void(0)"
+              class="mins"
+              @click="handler('minux', -1, cartList)"
+              >-</a
+            >
             <input
               autocomplete="off"
               type="text"
               minnum="1"
               class="itxt"
               :value="cartList.skuNum"
+              @change="handler('change', $event.target.value * 1, cartList)"
             />
-            <a href="javascript:void(0)" class="plus">+</a>
+            <a
+              href="javascript:void(0)"
+              class="plus"
+              @click="handler('add', 1, cartList)"
+              >+</a
+            >
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{ cartList.skuPrice * cartList.skuNum }}</span>
@@ -86,6 +97,35 @@ export default {
   methods: {
     getData() {
       this.$store.dispatch("getCartList");
+    },
+    // 修改某一個產品個數
+    async handler(type, num, cart) {
+      switch (type) {
+        case "add":
+          num = 1;
+          break;
+        case "minux":
+          num = cart.skuNum > 1 ? -1 : 0;
+          break;
+        case "change":
+          if (isNaN(num) || num < 1) {
+            num = 0;
+          } else {
+            num = parseInt(num) - cart.skuNum;
+          }
+          break;
+      }
+      // 派發action
+      try {
+        await this.$store.dispatch("addOrUpdateShopCart", {
+          skuId: cart.skuId,
+          skuNum: num,
+        });
+        // 在獲取一次資料刷新頁面
+        this.getData();
+      } catch (error) {
+        alert("操作失敗" + error);
+      }
     },
   },
   computed: {
