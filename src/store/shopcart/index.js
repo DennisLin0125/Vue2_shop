@@ -1,4 +1,4 @@
-import { reqGetCartList } from "@/api";
+import { reqGetCartList, reqDeleteCartById } from "@/api";
 
 export const shopCartStore = {
   // 準備actions用於響應組件中的動作
@@ -8,6 +8,15 @@ export const shopCartStore = {
       let result = await reqGetCartList();
       if (result.code == 200) {
         commit("GETCARTLIST", result.data);
+      }
+    },
+    // 刪除購物車
+    async deleteCartById({ commit }, skuId) {
+      let result = await reqDeleteCartById(skuId);
+      if (result.code == 200) {
+        return 'ok'
+      } else {
+        return Promise.reject(new Error('failed'))
       }
     },
   },
@@ -24,8 +33,8 @@ export const shopCartStore = {
   },
   // 計算屬性
   getters: {
-    cartList(state){
-      return state.shopCartList[0]||{};
+    cartList(state) {
+      return state.shopCartList[0] || {};
     }
   },
 };

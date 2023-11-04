@@ -59,3 +59,11 @@ export const reqGetCartList = () => {
     method: "GET",
   });
 }
+
+// 刪除購物車產品的API  /api/cart/deleteCart/{skuId}  DELETE
+export const reqDeleteCartById = (skuId) => {
+  return request({
+    url: `/cart/deleteCart/${skuId}`,
+    method: "DELETE",
+  });
+}
