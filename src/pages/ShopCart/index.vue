@@ -21,6 +21,7 @@
               type="checkbox"
               name="chk_list"
               :checked="cartList.isChecked"
+              @change="updateCheck(cartList, $event.target.checked)"
             />
           </li>
           <li class="cart-list-con2">
@@ -136,6 +137,16 @@ export default {
         this.getData();
       } catch (error) {
         alert("刪除失敗:" + error.message);
+      }
+    },
+    // 更新勾選狀態
+    async updateCheck({ skuId }, isChecked) {
+      isChecked = isChecked ? 1 : 0;
+      try {
+        await this.$store.dispatch("updateCheckedById", { skuId, isChecked });
+        this.getData();
+      } catch (error) {
+        alert("勾選失敗:" + error.message);
       }
     },
   },

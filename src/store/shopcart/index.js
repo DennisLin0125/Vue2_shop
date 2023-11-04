@@ -1,4 +1,4 @@
-import { reqGetCartList, reqDeleteCartById } from "@/api";
+import { reqGetCartList, reqDeleteCartById, reqUpdateCheckedById } from "@/api";
 
 export const shopCartStore = {
   // 準備actions用於響應組件中的動作
@@ -13,6 +13,15 @@ export const shopCartStore = {
     // 刪除購物車
     async deleteCartById({ commit }, skuId) {
       let result = await reqDeleteCartById(skuId);
+      if (result.code == 200) {
+        return 'ok'
+      } else {
+        return Promise.reject(new Error('failed'))
+      }
+    },
+    // 修改選中狀態
+    async updateCheckedById({ commit }, {skuId, isChecked}) {
+      let result = await reqUpdateCheckedById(skuId, isChecked);
       if (result.code == 200) {
         return 'ok'
       } else {

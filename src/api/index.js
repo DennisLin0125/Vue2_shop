@@ -67,3 +67,11 @@ export const reqDeleteCartById = (skuId) => {
     method: "DELETE",
   });
 }
+
+// 修改商品選中狀態  /api/cart/checkCart/{skuId}/{isChecked}   GET
+export const reqUpdateCheckedById = (skuId, isChecked) => {
+  return request({
+    url: `/cart/checkCart/${skuId}/${isChecked}`,
+    method: "GET",
+  });
+}
