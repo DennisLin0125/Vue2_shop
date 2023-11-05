@@ -39,8 +39,6 @@ export default {
   mounted() {
     // 派發action
     this.$store.dispatch("getFloorList");
-    // 派發action 取得用戶訊息
-    this.$store.dispatch('getUserInfo');
   },
   computed: {
     ...mapState({
