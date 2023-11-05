@@ -66,18 +66,23 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllChecked" />
-        <span>全选</span>
+        <input
+          class="chooseAll"
+          type="checkbox"
+          :checked="isAllChecked && cartInfoList.length > 0"
+          @change="updateAllCartChecked"
+        />
+        <span>全選</span>
       </div>
       <div class="option">
-        <a @click="deleteAllChecked">删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
+        <a @click="deleteAllChecked">删除選中的商品</a>
+        <a href="#none">移到我的關注</a>
         <a href="#none">清除下柜商品</a>
       </div>
       <div class="money-box">
         <div class="chosed">已选择 <span>0</span>件商品</div>
         <div class="sumprice">
-          <em>总价（不含运费） ：</em>
+          <em>總價（不含運費） ：</em>
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
@@ -150,13 +155,24 @@ export default {
       }
     },
     // 刪除勾選
-    async deleteAllChecked(){
+    async deleteAllChecked() {
       // 因為不能拿到數據,所以派發一個action
       try {
-        await this.$store.dispatch('deleteAllCheckedCart');
+        await this.$store.dispatch("deleteAllCheckedCart");
         this.getData();
       } catch (error) {
         alert("刪除勾選:" + error.message);
+      }
+    },
+    // 修改全部產品的選中狀態
+    async updateAllCartChecked(event) {
+      let isChecked = event.target.checked ? 1 : 0;
+      try {
+        // 派發action
+        await this.$store.dispatch("updateAllCartIsChecked", isChecked);
+        this.getData();
+      } catch (error) {
+        alert("修改失敗");
       }
     },
   },
@@ -349,7 +365,7 @@ export default {
         padding: 0 10px;
         color: #666;
 
-        &:hover{
+        &:hover {
           cursor: pointer;
         }
       }

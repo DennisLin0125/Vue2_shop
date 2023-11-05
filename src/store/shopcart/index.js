@@ -41,6 +41,15 @@ export const shopCartStore = {
       });
       return Promise.all(PromiseAll);
     },
+    // 修改全部商品的狀態
+    updateAllCartIsChecked({ dispatch, getters }, isChecked) {
+      let PromiseAll = [];
+      getters.cartList.cartInfoList.forEach(item => {
+        let promise = dispatch('updateCheckedById', { skuId: item.skuId, isChecked });
+        PromiseAll.push(promise)
+      })
+      return Promise.all(PromiseAll);
+    }
   },
   // 準備mutations用於操作數據(state)
   mutations: {
