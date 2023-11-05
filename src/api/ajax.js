@@ -28,6 +28,11 @@ request.interceptors.request.use((config) => {
     // 給請求頭加字段(userTempId)
     config.headers.userTempId = store.state.detailStore.uuid_token;
   }
+
+  if (store.state.userStore.token) {
+    // 給請求頭加上token
+    config.headers.token = store.state.userStore.token;
+  }
   return config;
 });
 

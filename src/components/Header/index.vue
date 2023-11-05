@@ -7,11 +7,15 @@
       <div class="container">
         <div class="loginList">
           <p>尚品匯歡迎您！</p>
-          <p>
+          <p v-if="!userName">
             <span>請</span>
             <!-- 聲明式導航 -->
             <router-link to="/login">登入</router-link>
             <router-link to="/register" class="register">免費註冊</router-link>
+          </p>
+          <p v-else>
+            <a>{{ userName }}</a>
+            <a class="register">退出登入</a>
           </p>
         </div>
         <div class="typeList">
@@ -89,6 +93,12 @@ export default {
       this.keyword = "";
     });
   },
+  computed: {
+    // 用戶訊息
+    userName(){
+      return this.$store.state.userStore.userInfo.name
+    }
+  }
 };
 </script>
 

@@ -101,3 +101,11 @@ export const reqUserLogin = (data) => {
     data,
   });
 }
+
+// 獲取用戶訊息 (需要帶token) /api/user/passport/auth/getUserInfo   GET 
+export const reqUserInfo = () => {
+  return request({
+    url: `/user/passport/auth/getUserInfo`,
+    method: "GET",
+  });
+}
