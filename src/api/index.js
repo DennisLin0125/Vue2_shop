@@ -75,3 +75,20 @@ export const reqUpdateCheckedById = (skuId, isChecked) => {
     method: "GET",
   });
 }
+
+// 獲取驗證碼  /api/user/passport/sendCode/{phone}  GET
+export const reqGetcode = (phone) => {
+  return request({
+    url: `/user/passport/sendCode/${phone}`,
+    method: "GET",
+  });
+}
+
+// 用戶註冊  /api/user/passport/register  POST  參數: phone code password
+export const reqUserRegister = (data) => {
+  return request({
+    url: `/user/passport/login`,
+    method: "POST",
+    data,
+  });
+}

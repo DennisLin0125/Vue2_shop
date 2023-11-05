@@ -10,36 +10,45 @@
       </h3>
       <div class="content">
         <label>手機號碼:</label>
-        <input type="text" placeholder="請輸入你的手機號碼" />
+        <input type="text" placeholder="請輸入你的手機號碼" v-model="phone" />
         <span class="error-msg">錯誤提示訊息</span>
       </div>
       <div class="content">
         <label>驗證碼:</label>
-        <input type="text" placeholder="請輸入驗證碼" />
-        <img
-          ref="code"
-          src="http://182.92.128.115/api/user/passport/code"
-          alt="code"
-        />
+        <input type="text" placeholder="請輸入驗證碼" v-model="code" />
+        <button
+          style="width: 100px; height: 38px; margin-left: 10px"
+          @click="getCode"
+        >
+          獲取驗證碼
+        </button>
         <span class="error-msg">錯誤提示訊息</span>
       </div>
       <div class="content">
         <label>登入密碼:</label>
-        <input type="text" placeholder="請輸入你的登入密碼" />
+        <input
+          type="password"
+          placeholder="請輸入你的登入密碼"
+          v-model="password"
+        />
         <span class="error-msg">錯誤提示訊息</span>
       </div>
       <div class="content">
         <label>確認密碼:</label>
-        <input type="text" placeholder="請輸入確認密碼" />
+        <input
+          type="password"
+          placeholder="請輸入確認密碼"
+          v-model="checkPassword"
+        />
         <span class="error-msg">錯誤提示訊息</span>
       </div>
       <div class="controls">
-        <input name="m1" type="checkbox" />
+        <input name="m1" type="checkbox" v-model="agree" />
         <span>同意協議並註冊《尚品匯用戶協議》</span>
         <span class="error-msg">錯誤提示訊息</span>
       </div>
       <div class="btn">
-        <button>完成註冊</button>
+        <button @click="userRegister">完成註冊</button>
       </div>
     </div>
 
@@ -65,6 +74,57 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Register",
+  data() {
+    return {
+      // 手機號
+      phone: "",
+      // 驗證碼
+      code: "",
+      // 密碼
+      password: "",
+      // 確認密碼
+      checkPassword: "",
+      // 同意註冊
+      agree: false,
+    };
+  },
+  methods: {
+    async getCode() {
+      try {
+        // 派發action獲取驗證碼
+        if (this.phone) {
+          await this.$store.dispatch("getCode", this.phone);
+          this.code = this.$store.state.userStore.code;
+        } else {
+          alert("請輸入電話號碼");
+        }
+      } catch (error) {
+        alert("獲取驗證碼失敗");
+      }
+    },
+    // 用戶註冊
+    async userRegister() {
+      const { phone, code, password, checkPassword } = this;
+      try {
+        if (
+          phone &&
+          code &&
+          password &&
+          checkPassword &&
+          password == checkPassword
+        ) {
+          // 派發action
+          await this.$store.dispatch("userRegister", { phone, code, password });
+          // 跳轉路由
+          this.$router.push("/login");
+        } else {
+          alert("資料有誤");
+        }
+      } catch (error) {
+        alert(error);
+      }
+    },
+  },
 };
 </script>
 
