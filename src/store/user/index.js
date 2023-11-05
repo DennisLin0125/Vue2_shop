@@ -1,4 +1,4 @@
-import { reqGetcode, reqUserRegister } from "@/api";
+import { reqGetcode, reqUserRegister, reqUserLogin } from "@/api";
 
 export const userStore = {
   // 準備actions用於響應組件中的動作
@@ -16,9 +16,19 @@ export const userStore = {
     // 用戶註冊
     async userRegister({ commit }, data) {
       let result = await reqUserRegister(data);
-      console.log(result);
       if (result.code == 200) {
         alert("註冊" + result.message);
+        return "ok";
+      } else {
+        return Promise.reject(new Error(result.message));
+      }
+    },
+    // 用戶登入
+    async userLogin({ commit }, data) {
+      let result = await reqUserLogin(data);
+      if (result.code == 200) {
+        alert("登入" + result.message);
+        commit("USERLOGIN", result.data.token);
         return "ok";
       } else {
         return Promise.reject(new Error(result.message));
@@ -30,10 +40,14 @@ export const userStore = {
     GETCODE(state, code) {
       state.code = code;
     },
+    USERLOGIN(state, token) {
+      state.token = token;
+    },
   },
   // 準備state用於存放數據
   state: {
     code: "",
+    token: "",
   },
   // 計算屬性
   getters: {},
