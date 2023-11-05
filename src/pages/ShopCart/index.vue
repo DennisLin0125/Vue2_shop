@@ -70,7 +70,7 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a @click="deleteAllChecked">删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -147,6 +147,16 @@ export default {
         this.getData();
       } catch (error) {
         alert("勾選失敗:" + error.message);
+      }
+    },
+    // 刪除勾選
+    async deleteAllChecked(){
+      // 因為不能拿到數據,所以派發一個action
+      try {
+        await this.$store.dispatch('deleteAllCheckedCart');
+        this.getData();
+      } catch (error) {
+        alert("刪除勾選:" + error.message);
       }
     },
   },
@@ -338,6 +348,10 @@ export default {
         float: left;
         padding: 0 10px;
         color: #666;
+
+        &:hover{
+          cursor: pointer;
+        }
       }
     }
 

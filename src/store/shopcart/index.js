@@ -20,13 +20,26 @@ export const shopCartStore = {
       }
     },
     // 修改選中狀態
-    async updateCheckedById({ commit }, {skuId, isChecked}) {
+    async updateCheckedById({ commit }, { skuId, isChecked }) {
       let result = await reqUpdateCheckedById(skuId, isChecked);
       if (result.code == 200) {
         return 'ok'
       } else {
         return Promise.reject(new Error('failed'))
       }
+    },
+    // 刪除全部勾選的產品
+    deleteAllCheckedCart({ dispatch, getters }) {
+      // 獲取購物車全部屬性
+      let PromiseAll = [];
+      getters.cartList.cartInfoList.forEach(item => {
+        // 派發action
+        if (item.isChecked == 1) {
+          let promise = dispatch('deleteCartById', item.skuId);
+          PromiseAll.push(promise)
+        }
+      });
+      return Promise.all(PromiseAll);
     },
   },
   // 準備mutations用於操作數據(state)
