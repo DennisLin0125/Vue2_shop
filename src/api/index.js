@@ -102,10 +102,18 @@ export const reqUserLogin = (data) => {
   });
 }
 
-// 獲取用戶訊息 (需要帶token) /api/user/passport/auth/getUserInfo   GET 
+//! 獲取用戶訊息 (需要帶token) /api/user/passport/auth/getUserInfo   GET 
 export const reqUserInfo = () => {
   return request({
     url: `/user/passport/auth/getUserInfo`,
+    method: "GET",
+  });
+}
+
+//* 登出 /api/user/passport/logout  GET
+export const reqUserLogout = () => {
+  return request({
+    url: `/user/passport/logout`,
     method: "GET",
   });
 }

@@ -15,7 +15,7 @@
           </p>
           <p v-else>
             <a>{{ userName }}</a>
-            <a class="register">退出登入</a>
+            <a class="register" @click="logout" href="#">退出登入</a>
           </p>
         </div>
         <div class="typeList">
@@ -86,6 +86,17 @@ export default {
         this.$router.push(location);
       }
     },
+    // 登出
+    async logout() {
+      try {
+        // 派發action 登出
+        await this.$store.dispatch("userLogout");
+        // 跳回首頁
+        this.$router.push('/home')
+      } catch (error) {
+        alert('登出失敗')
+      }
+    },
   },
   mounted() {
     // 清除關鍵字
@@ -95,10 +106,10 @@ export default {
   },
   computed: {
     // 用戶訊息
-    userName(){
-      return this.$store.state.userStore.userInfo.name
-    }
-  }
+    userName() {
+      return this.$store.state.userStore.userInfo.name;
+    },
+  },
 };
 </script>
 
@@ -125,6 +136,9 @@ export default {
             border-left: 1px solid #b3aeae;
             padding: 0 5px;
             margin-left: 5px;
+            &:hover {
+              cursor: pointer;
+            }
           }
         }
       }

@@ -1,4 +1,10 @@
-import { reqGetcode, reqUserRegister, reqUserLogin, reqUserInfo } from "@/api";
+import {
+  reqGetcode,
+  reqUserRegister,
+  reqUserLogin,
+  reqUserInfo,
+  reqUserLogout,
+} from "@/api";
 
 export const userStore = {
   // 準備actions用於響應組件中的動作
@@ -27,8 +33,9 @@ export const userStore = {
     async userLogin({ commit }, data) {
       let result = await reqUserLogin(data);
       if (result.code == 200) {
-        alert("登入" + result.message);
         commit("USERLOGIN", result.data.token);
+        // 持久化存儲token
+        localStorage.setItem("TOKEN", result.data.token);
         return "ok";
       } else {
         return Promise.reject(new Error(result.message));
@@ -39,6 +46,16 @@ export const userStore = {
       let result = await reqUserInfo();
       if (result.code == 200) {
         commit("GETUSERINFO", result.data);
+      }
+    },
+    // 用戶登出
+    async userLogout({ commit }) {
+      let result = await reqUserLogout();
+      if (result.code == 200) {
+        commit("USERLOGOUT");
+        return "ok";
+      } else {
+        return Promise.reject(result.message);
       }
     },
   },
@@ -53,11 +70,16 @@ export const userStore = {
     GETUSERINFO(state, userInfo) {
       state.userInfo = userInfo;
     },
+    USERLOGOUT(state) {
+      state.token = "";
+      state.userInfo = {};
+      localStorage.removeItem("TOKEN");
+    },
   },
   // 準備state用於存放數據
   state: {
     code: "",
-    token: "",
+    token: localStorage.getItem("TOKEN"),
     userInfo: {},
   },
   // 計算屬性
