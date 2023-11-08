@@ -117,3 +117,19 @@ export const reqUserLogout = () => {
     method: "GET",
   });
 }
+
+// * 獲取用戶地址訊息  /api/user/userAddress/auth/findUserAddressList  GET
+export const reqAddressInfo = () => {
+  return request({
+    url: `/user/userAddress/auth/findUserAddressList`,
+    method: "GET",
+  });
+}
+
+// *獲取訂單交易頁訊息  /api/order/auth/trade  GET
+export const reqOrderInfo = () => {
+  return request({
+    url: `/order/auth/trade`,
+    method: "GET",
+  });
+}

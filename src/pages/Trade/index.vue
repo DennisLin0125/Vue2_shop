@@ -121,7 +121,12 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Trade',
+  mounted(){
+    this.$store.dispatch('getUserAddress');
+    this.$store.dispatch('getOrderInfo');
+  }
 }
 </script>
 
