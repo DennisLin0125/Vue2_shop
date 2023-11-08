@@ -3,36 +3,27 @@
     <h3 class="title">填寫並核對訂單資訊</h3>
     <div class="content">
       <h5 class="receive">收件人資訊</h5>
-      <div class="address clearFix">
-        <span class="username selected">張三</span>
-        <p>
-          <span class="s1">北京市昌平區宏福科技園區綜合大樓6樓</span>
-          <span class="s2">15010658793</span>
-          <span class="s3">預設位址</span>
-        </p>
-      </div>
-      <div class="address clearFix">
-        <span class="username selected">李四</span>
-        <p>
-          <span class="s1">北京市昌平區宏福科技園區綜合大樓6樓</span>
-          <span class="s2">13590909098</span>
-          <span class="s3">預設位址</span>
-        </p>
-      </div>
-      <div class="address clearFix">
-        <span class="username selected">王五</span>
-        <p>
-          <span class="s1">北京市昌平區宏福科技園區綜合大樓6樓</span>
-          <span class="s2">18012340987</span>
-          <span class="s3">預設位址</span>
+      <div
+        class="address clearFix"
+        v-for="addressInfo in userAddress"
+        :key="addressInfo.id"
+      >
+        <span
+          class="username"
+          :class="{ selected: addressInfo.isDefault == 1 }"
+          >{{ addressInfo.consignee }}</span
+        >
+        <p @click="changeDefault(addressInfo, userAddress)">
+          <span class="s1">{{ addressInfo.userAddress }}</span>
+          <span class="s2">{{ addressInfo.phoneNum }}</span>
+          <span class="s3" v-show="addressInfo.isDefault == 1">預設位址</span>
         </p>
       </div>
       <div class="line"></div>
       <h5 class="pay">付款方式</h5>
       <div class="address clearFix">
         <span class="username selected">線上付款</span>
-        <span class="username" style="margin-left:5px;">貨到付款</span>
-
+        <span class="username" style="margin-left: 5px">貨到付款</span>
       </div>
       <div class="line"></div>
       <h5 class="pay">送貨清單</h5>
@@ -47,11 +38,13 @@
         <h5>商品清單</h5>
         <ul class="list clearFix">
           <li>
-            <img src="./images/goods.png" alt="">
+            <img src="./images/goods.png" alt="" />
           </li>
           <li>
             <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金 行動聯通電信4G手機矽膠透明防摔軟殼 本色系列</p>
+              Apple iPhone 6s (A1700) 64G 玫瑰金
+              行動聯通電信4G手機矽膠透明防摔軟殼 本色系列
+            </p>
             <h4>7天無理由退貨</h4>
           </li>
           <li>
@@ -62,11 +55,13 @@
         </ul>
         <ul class="list clearFix">
           <li>
-            <img src="./images/goods.png" alt="">
+            <img src="./images/goods.png" alt="" />
           </li>
           <li>
             <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金 行動聯通電信4G手機矽膠透明防摔軟殼 本色系列</p>
+              Apple iPhone 6s (A1700) 64G 玫瑰金
+              行動聯通電信4G手機矽膠透明防摔軟殼 本色系列
+            </p>
             <h4>7天無理由退貨</h4>
           </li>
           <li>
@@ -78,8 +73,10 @@
       </div>
       <div class="bbs">
         <h5>買家留言：</h5>
-        <textarea placeholder="建議留言前先與商家溝通確認" class="remarks-cont"></textarea>
-
+        <textarea
+          placeholder="建議留言前先與商家溝通確認"
+          class="remarks-cont"
+        ></textarea>
       </div>
       <div class="line"></div>
       <div class="bill">
@@ -120,14 +117,34 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Trade',
-  mounted(){
-    this.$store.dispatch('getUserAddress');
-    this.$store.dispatch('getOrderInfo');
-  }
-}
+  name: "Trade",
+  mounted() {
+    this.$store.dispatch("getUserAddress");
+    this.$store.dispatch("getOrderInfo");
+  },
+  computed: {
+    ...mapState({
+      userAddress: (state) => state.addressInfoStore.userAddress,
+    }),
+    // 將來提交訂單默認選中的地址
+    userDefaultAddress() {
+      // find:查找陣列中符合條件的元素
+      return this.userAddress.find((item) => item.isDefault == 1);
+    },
+  },
+  methods: {
+    // 修改默認地址  (排他)
+    changeDefault(addressInfo, userAddress) {
+      // 先將全部的isDefault清為0
+      userAddress.forEach((item) => (item.isDefault = 0));
+      // 滑鼠點到的才為1
+      addressInfo.isDefault = 1;
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -195,7 +212,6 @@ export default {
 
         .s1 {
           float: left;
-
         }
 
         .s2 {
@@ -275,7 +291,6 @@ export default {
           line-height: 30px;
 
           p {
-
             margin-bottom: 20px;
           }
 
@@ -285,7 +300,6 @@ export default {
           }
 
           h3 {
-
             color: #e12228;
           }
         }
@@ -376,9 +390,7 @@ export default {
       text-align: center;
       color: #fff;
       background-color: #e1251b;
-
     }
   }
-
 }
 </style>
