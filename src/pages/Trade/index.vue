@@ -36,38 +36,18 @@
       </div>
       <div class="detail">
         <h5>商品清單</h5>
-        <ul class="list clearFix">
+        <ul class="list clearFix" v-for="detail in orderInfo.detailArrayList" :key="detail.skuId">
           <li>
-            <img src="./images/goods.png" alt="" />
+            <img :src="detail.imgUrl" height="82px" width="82px" />
           </li>
           <li>
-            <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金
-              行動聯通電信4G手機矽膠透明防摔軟殼 本色系列
-            </p>
+            <p style="text-align: left;">{{ detail.skuName }}</p>
             <h4>7天無理由退貨</h4>
           </li>
           <li>
-            <h3>￥5399.00</h3>
+            <h3>￥{{ detail.orderPrice }}.00</h3>
           </li>
-          <li>X1</li>
-          <li>有貨</li>
-        </ul>
-        <ul class="list clearFix">
-          <li>
-            <img src="./images/goods.png" alt="" />
-          </li>
-          <li>
-            <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金
-              行動聯通電信4G手機矽膠透明防摔軟殼 本色系列
-            </p>
-            <h4>7天無理由退貨</h4>
-          </li>
-          <li>
-            <h3>￥5399.00</h3>
-          </li>
-          <li>X1</li>
+          <li>X{{ detail.skuNum }}</li>
           <li>有貨</li>
         </ul>
       </div>
@@ -76,6 +56,7 @@
         <textarea
           placeholder="建議留言前先與商家溝通確認"
           class="remarks-cont"
+          v-model="msg"
         ></textarea>
       </div>
       <div class="line"></div>
@@ -88,8 +69,8 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <b><i>1</i>件商品，總商品金額</b>
-          <span>¥5399.00</span>
+          <b><i>{{ orderInfo.totalNum }}</i>件商品，總商品金額</b>
+          <span>¥{{ orderInfo.totalAmount }}</span>
         </li>
         <li>
           <b>返現：</b>
@@ -102,12 +83,12 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">應付金額:　<span>¥5399.00</span></div>
+      <div class="price">應付金額:　<span>¥{{ orderInfo.totalAmount }}</span></div>
       <div class="receiveInfo">
         寄送至:
-        <span>北京市昌平區宏福科技園綜合大樓6樓</span>
-        收貨人：<span>張三</span>
-        <span>15010658793</span>
+        <span>{{ userDefaultAddress.fullAddress }}</span>
+        收貨人：<span>{{ userDefaultAddress.consignee }}</span>
+        <span>{{ userDefaultAddress.phoneNum }}</span>
       </div>
     </div>
     <div class="sub clearFix">
@@ -121,6 +102,11 @@ import { mapState } from "vuex";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Trade",
+  data() {
+    return {
+      msg:'',
+    }
+  },
   mounted() {
     this.$store.dispatch("getUserAddress");
     this.$store.dispatch("getOrderInfo");
@@ -128,11 +114,12 @@ export default {
   computed: {
     ...mapState({
       userAddress: (state) => state.addressInfoStore.userAddress,
+      orderInfo: (state) => state.addressInfoStore.orderInfo,
     }),
     // 將來提交訂單默認選中的地址
     userDefaultAddress() {
       // find:查找陣列中符合條件的元素
-      return this.userAddress.find((item) => item.isDefault == 1);
+      return this.userAddress.find((item) => item.isDefault == 1) || {};
     },
   },
   methods: {
