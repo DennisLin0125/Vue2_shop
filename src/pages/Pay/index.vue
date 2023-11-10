@@ -121,30 +121,47 @@ export default {
           cancelButtonText: "付款有問題",
           confirmButtonText: "已付款成功",
           showClose: false,
+          beforeClose: (type, instance, done) => {
+            if (type == 'cancel') {
+              alert('請聯絡管理員')
+              clearInterval(this.timer);
+              this.timer = null;
+              done();
+            } else {
+              // if (this.code == 200) {
+                clearInterval(this.timer);
+                this.timer = null;
+                // 關閉彈出框
+                done();
+                // 跳轉下一個路由
+                this.$router.push("/paysuccess");
+              // }
+            }
+          },
         });
         // 偷懶
-        setTimeout(async () => {
-          await this.$API.reqPayStatus(this.$route.query.orderId);
-          // 關閉彈出框
-          this.$msgbox.close();
-          // 跳轉下一個路由
-          this.$router.push("/paysuccess");
-        }, 2000)
+        // setTimeout(async () => {
+        //   await this.$API.reqPayStatus(this.$route.query.orderId);
+        //   // 關閉彈出框
+        //   this.$msgbox.close();
+        //   // 跳轉下一個路由
+        //   this.$router.push("/paysuccess");
+        // }, 10000)
         // 標準寫法
-        // if (!this.timer) {
-        //   this.timer = setInterval(async () => {
-        //     let result = await this.$API.reqPayStatus(this.$route.query.orderId);
-        //     if (result.code == 200) {
-        //       clearInterval(this.timer);
-        //       this.timer = null;
-        //       this.code = result.code;
-        //       // 關閉彈出框
-        //       this.$msgbox.close();
-        //       // 跳轉下一個路由
-        //       this.$router.push("/paysuccess");
-        //     }
-        //   }, 1000);
-        // }
+        if (!this.timer) {
+          this.timer = setInterval(async () => {
+            let result = await this.$API.reqPayStatus(this.$route.query.orderId);
+            if (result.code == 200) {
+              clearInterval(this.timer);
+              this.timer = null;
+              this.code = result.code;
+              // 關閉彈出框
+              this.$msgbox.close();
+              // 跳轉下一個路由
+              this.$router.push("/paysuccess");
+            }
+          }, 1000);
+        }
       } catch (error) {
         console.error("An error occurred:", error);
       }
