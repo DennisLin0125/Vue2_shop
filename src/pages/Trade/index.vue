@@ -114,6 +114,8 @@ export default {
   data() {
     return {
       msg: "",
+      // 訂單號碼
+      orderId: "",
     };
   },
   mounted() {
@@ -153,8 +155,16 @@ export default {
         orderDetailList: this.orderInfo.detailArrayList,
       };
       // 發送請求
-      let result = await this.$API.reqSubmitOrder(tradeNo, data);
-      console.log(result)
+      try {
+        let result = await this.$API.reqSubmitOrder(tradeNo, data);
+        if (result.code == 200) {
+          this.orderId = result.data;
+          // 路由跳轉
+          this.$router.push(`/pay?orderId=${this.orderId}`)
+        }
+      } catch (error) {
+        alert(error.message);
+      }
     },
   },
 };

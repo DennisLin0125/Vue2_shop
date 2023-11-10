@@ -142,3 +142,12 @@ export const reqSubmitOrder = (tradeNo, data) => {
     data,
   });
 };
+
+// *支付訊息 /api/payment/weixin/createNative/{orderId}  GET
+
+export const reqPaymentInfo = (orderId) => {
+  return request({
+    url: `/payment/weixin/createNative/${orderId}`,
+    method: "GET",
+  });
+};
