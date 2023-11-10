@@ -4,9 +4,16 @@ import App from "./App.vue";
 import TypeNav from "@/components/TypeNav";
 // 分頁器 -- 全局組件
 import Pagination from "@/components/Pagination";
+import { Button,MessageBox } from 'element-ui';
+
 // 註冊為全局組件
 Vue.component(TypeNav.name, TypeNav);
 Vue.component(Pagination.name, Pagination);
+// 第一種註冊UI
+Vue.component(Button.name, Button);
+// 第二種方式
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
 
 // 引入mockServe.js
 import "@/mock/mockServe";

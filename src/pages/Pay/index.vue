@@ -17,7 +17,7 @@
           >
           <span class="fr"
             ><em class="lead">應付金額：</em
-            ><em class="orange money">￥{{payInfo.totalFee}}</em></span
+            ><em class="orange money">￥{{ payInfo.totalFee }}</em></span
           >
         </div>
       </div>
@@ -76,7 +76,7 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <a type="text" class="btn" @click="open">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -98,7 +98,7 @@ export default {
   name: "Pay",
   data() {
     return {
-      payInfo:{},
+      payInfo: {},
     };
   },
   mounted() {
@@ -114,6 +114,16 @@ export default {
       } catch (error) {
         alert(error.message);
       }
+    },
+    open() {
+      this.$alert("<strong>这是 <i>HTML</i> 片段</strong>", "HTML 片段", {
+        dangerouslyUseHTMLString: true,
+        center:true,
+        showCancelButton:true,
+        cancelButtonText:"付款有問題",
+        confirmButtonText:"已付款成功",
+        showClose:false,
+      });
     },
   },
 };
