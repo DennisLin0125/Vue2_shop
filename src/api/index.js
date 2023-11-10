@@ -42,7 +42,7 @@ export const reqGoodsInfo = (skuID) => {
     url: `/item/${skuID}`,
     method: "GET",
   });
-}
+};
 
 // 將產品添加到購物車 /api/cart/addToCart/{skuID}/{skuNum}  POST
 export const reqAddOrUpdateShopCart = (skuID, skuNum) => {
@@ -50,7 +50,7 @@ export const reqAddOrUpdateShopCart = (skuID, skuNum) => {
     url: `/cart/addToCart/${skuID}/${skuNum}`,
     method: "POST",
   });
-}
+};
 
 // 獲取購物車數據列表  /api/cart/cartList   GET
 export const reqGetCartList = () => {
@@ -58,7 +58,7 @@ export const reqGetCartList = () => {
     url: "/cart/cartList",
     method: "GET",
   });
-}
+};
 
 // 刪除購物車產品的API  /api/cart/deleteCart/{skuId}  DELETE
 export const reqDeleteCartById = (skuId) => {
@@ -66,7 +66,7 @@ export const reqDeleteCartById = (skuId) => {
     url: `/cart/deleteCart/${skuId}`,
     method: "DELETE",
   });
-}
+};
 
 // 修改商品選中狀態  /api/cart/checkCart/{skuId}/{isChecked}   GET
 export const reqUpdateCheckedById = (skuId, isChecked) => {
@@ -74,7 +74,7 @@ export const reqUpdateCheckedById = (skuId, isChecked) => {
     url: `/cart/checkCart/${skuId}/${isChecked}`,
     method: "GET",
   });
-}
+};
 
 // 獲取驗證碼  /api/user/passport/sendCode/{phone}  GET
 export const reqGetcode = (phone) => {
@@ -82,7 +82,7 @@ export const reqGetcode = (phone) => {
     url: `/user/passport/sendCode/${phone}`,
     method: "GET",
   });
-}
+};
 
 // 用戶註冊  /api/user/passport/register  POST  參數: phone code password
 export const reqUserRegister = (data) => {
@@ -91,7 +91,7 @@ export const reqUserRegister = (data) => {
     method: "POST",
     data,
   });
-}
+};
 
 // 用戶登入  /api/user/passport/login   POST  參數: phone password
 export const reqUserLogin = (data) => {
@@ -100,15 +100,15 @@ export const reqUserLogin = (data) => {
     method: "POST",
     data,
   });
-}
+};
 
-//! 獲取用戶訊息 (需要帶token) /api/user/passport/auth/getUserInfo   GET 
+//! 獲取用戶訊息 (需要帶token) /api/user/passport/auth/getUserInfo   GET
 export const reqUserInfo = () => {
   return request({
     url: `/user/passport/auth/getUserInfo`,
     method: "GET",
   });
-}
+};
 
 //* 登出 /api/user/passport/logout  GET
 export const reqUserLogout = () => {
@@ -116,7 +116,7 @@ export const reqUserLogout = () => {
     url: `/user/passport/logout`,
     method: "GET",
   });
-}
+};
 
 // * 獲取用戶地址訊息  /api/user/userAddress/auth/findUserAddressList  GET
 export const reqAddressInfo = () => {
@@ -124,7 +124,7 @@ export const reqAddressInfo = () => {
     url: `/user/userAddress/auth/findUserAddressList`,
     method: "GET",
   });
-}
+};
 
 // *獲取訂單交易頁訊息  /api/order/auth/trade  GET
 export const reqOrderInfo = () => {
@@ -132,4 +132,13 @@ export const reqOrderInfo = () => {
     url: `/order/auth/trade`,
     method: "GET",
   });
-}
+};
+
+// * 提交訂單  /api/order/auth/submitOrder?tradeNo={tradeNo}  POST
+export const reqSubmitOrder = (tradeNo, data) => {
+  return request({
+    url: `/order/auth/submitOrder?tradeNo=${tradeNo}`,
+    method: "POST",
+    data,
+  });
+};

@@ -36,12 +36,16 @@
       </div>
       <div class="detail">
         <h5>商品清單</h5>
-        <ul class="list clearFix" v-for="detail in orderInfo.detailArrayList" :key="detail.skuId">
+        <ul
+          class="list clearFix"
+          v-for="detail in orderInfo.detailArrayList"
+          :key="detail.skuId"
+        >
           <li>
             <img :src="detail.imgUrl" height="82px" width="82px" />
           </li>
           <li>
-            <p style="text-align: left;">{{ detail.skuName }}</p>
+            <p style="text-align: left">{{ detail.skuName }}</p>
             <h4>7天無理由退貨</h4>
           </li>
           <li>
@@ -69,7 +73,10 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <b><i>{{ orderInfo.totalNum }}</i>件商品，總商品金額</b>
+          <b
+            ><i>{{ orderInfo.totalNum }}</i
+            >件商品，總商品金額</b
+          >
           <span>¥{{ orderInfo.totalAmount }}</span>
         </li>
         <li>
@@ -83,7 +90,9 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">應付金額:　<span>¥{{ orderInfo.totalAmount }}</span></div>
+      <div class="price">
+        應付金額:　<span>¥{{ orderInfo.totalAmount }}</span>
+      </div>
       <div class="receiveInfo">
         寄送至:
         <span>{{ userDefaultAddress.fullAddress }}</span>
@@ -92,7 +101,7 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交訂單</router-link>
+      <a class="subBtn" @click="submitOrder">提交訂單</a>
     </div>
   </div>
 </template>
@@ -104,8 +113,8 @@ export default {
   name: "Trade",
   data() {
     return {
-      msg:'',
-    }
+      msg: "",
+    };
   },
   mounted() {
     this.$store.dispatch("getUserAddress");
@@ -129,6 +138,23 @@ export default {
       userAddress.forEach((item) => (item.isDefault = 0));
       // 滑鼠點到的才為1
       addressInfo.isDefault = 1;
+    },
+    // 提交訂單
+    async submitOrder() {
+      // 需要參數
+      let { tradeNo } = this.orderInfo;
+      // 其餘6個參數
+      let data = {
+        consignee: this.userDefaultAddress.consignee,
+        consigneeTel: this.userDefaultAddress.phoneNum,
+        deliveryAddress: this.userDefaultAddress.fullAddress,
+        paymentWay: "ONLINE",
+        orderComment: this.msg,
+        orderDetailList: this.orderInfo.detailArrayList,
+      };
+      // 發送請求
+      let result = await this.$API.reqSubmitOrder(tradeNo, data);
+      console.log(result)
     },
   },
 };

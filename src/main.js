@@ -17,6 +17,9 @@ import router from "@/router";
 // 引入store
 import store from "@/store";
 
+// 統一接收API文件
+import * as API from '@/api'
+
 Vue.config.productionTip = false;
 
 new Vue({
@@ -28,5 +31,6 @@ new Vue({
   // 註冊全局總線
   beforeCreate() {
     Vue.prototype.$bus = this;
+    Vue.prototype.$API = API;
   },
 }).$mount("#app");
