@@ -144,10 +144,17 @@ export const reqSubmitOrder = (tradeNo, data) => {
 };
 
 // *支付訊息 /api/payment/weixin/createNative/{orderId}  GET
-
 export const reqPaymentInfo = (orderId) => {
   return request({
     url: `/payment/weixin/createNative/${orderId}`,
+    method: "GET",
+  });
+};
+
+// *查詢訂單支付狀態  /api/payment/weixin/queryPayStatus/{orderId}  GET
+export const reqPayStatus = (orderId) => {
+  return request({
+    url: `/payment/weixin/queryPayStatus/${orderId}`,
     method: "GET",
   });
 };

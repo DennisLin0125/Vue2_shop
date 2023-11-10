@@ -4,21 +4,13 @@
       <div class="checkout-tit">
         <h4 class="tit-txt">
           <span class="success-icon"></span>
-          <span class="success-info"
-            >訂單提交成功，請您及時付款，以便盡快為您發貨~~</span
-          >
+          <span class="success-info">訂單提交成功，請您及時付款，以便盡快為您發貨~~</span>
         </h4>
         <div class="paymark">
-          <span class="fl"
-            >請您在提交訂單<em class="orange time">4小時</em
-            >之內完成支付，超時訂單會自動取消。 訂單號碼：<em>{{
-              $route.query.orderId
-            }}</em></span
-          >
-          <span class="fr"
-            ><em class="lead">應付金額：</em
-            ><em class="orange money">￥{{ payInfo.totalFee }}</em></span
-          >
+          <span class="fl">請您在提交訂單<em class="orange time">4小時</em>之內完成支付，超時訂單會自動取消。 訂單號碼：<em>{{
+            $route.query.orderId
+          }}</em></span>
+          <span class="fr"><em class="lead">應付金額：</em><em class="orange money">￥{{ payInfo.totalFee }}</em></span>
         </div>
       </div>
       <div class="checkout-info">
@@ -93,12 +85,15 @@
 </template>
 
 <script>
+import QRCode from "qrcode";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Pay",
   data() {
     return {
       payInfo: {},
+      timer: null,
+      code: "",
     };
   },
   mounted() {
@@ -115,15 +110,44 @@ export default {
         alert(error.message);
       }
     },
-    open() {
-      this.$alert("<strong>这是 <i>HTML</i> 片段</strong>", "HTML 片段", {
-        dangerouslyUseHTMLString: true,
-        center:true,
-        showCancelButton:true,
-        cancelButtonText:"付款有問題",
-        confirmButtonText:"已付款成功",
-        showClose:false,
-      });
+    async open() {
+      try {
+        // 生成一個QRcode
+        let url = await QRCode.toDataURL(this.payInfo.codeUrl);
+        this.$alert(`<img src=${url} />`, "請掃描支付", {
+          dangerouslyUseHTMLString: true,
+          center: true,
+          showCancelButton: true,
+          cancelButtonText: "付款有問題",
+          confirmButtonText: "已付款成功",
+          showClose: false,
+        });
+        // 偷懶
+        setTimeout(async () => {
+          await this.$API.reqPayStatus(this.$route.query.orderId);
+          // 關閉彈出框
+          this.$msgbox.close();
+          // 跳轉下一個路由
+          this.$router.push("/paysuccess");
+        }, 2000)
+        // 標準寫法
+        // if (!this.timer) {
+        //   this.timer = setInterval(async () => {
+        //     let result = await this.$API.reqPayStatus(this.$route.query.orderId);
+        //     if (result.code == 200) {
+        //       clearInterval(this.timer);
+        //       this.timer = null;
+        //       this.code = result.code;
+        //       // 關閉彈出框
+        //       this.$msgbox.close();
+        //       // 跳轉下一個路由
+        //       this.$router.push("/paysuccess");
+        //     }
+        //   }, 1000);
+        // }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
     },
   },
 };
