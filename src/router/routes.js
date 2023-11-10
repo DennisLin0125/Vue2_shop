@@ -8,7 +8,11 @@ import AddCartSuccess from '@/pages/AddCartSuccess';
 import ShopCart from "@/pages/ShopCart"
 import Trade from "@/pages/Trade";
 import Pay from "@/pages/Pay";
-import PaySuccess from "@/pages/PaySuccess"
+import PaySuccess from "@/pages/PaySuccess";
+import Center from "@/pages/Center";
+
+import GroupOrder from "@/pages/Center/GroupOrder";
+import MyOrder from "@/pages/Center/MyOrder"
 
 // 路由配置訊息
 export default [
@@ -22,6 +26,34 @@ export default [
         meta: {
             show: true,
         },
+    },
+    {
+        path: "/center",
+        component: Center,
+        meta: {
+            show: true,
+        },
+        children:[
+            {
+                path: '/center',
+                redirect: "myorder",
+            },
+            {
+                path: 'grouporder',
+                component: GroupOrder,
+                meta: {
+                    show: true,
+                },
+            },
+            {
+                path: 'myorder',
+                component: MyOrder,
+                meta: {
+                    show: true,
+                },
+            },
+
+        ]
     },
     {
         path: "/paysuccess",
