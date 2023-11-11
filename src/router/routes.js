@@ -67,12 +67,29 @@ export default [
     meta: {
       show: true,
     },
+    beforeEnter: (to, from, next) => {
+      // 去支付頁面之能從交易頁面去
+      if (from.path == "/trade") {
+        next();
+      } else {
+        next(false);
+      }
+    }
   },
   {
     path: "/trade",
     component: Trade,
     meta: {
       show: true,
+    },
+    // 路由獨享守衛
+    beforeEnter: (to, from, next) => {
+      // 去交易頁面只能從購物車頁面去
+      if (from.path == "/shopcart") {
+        next();
+      } else {
+        next(false);
+      }
     },
   },
   {
