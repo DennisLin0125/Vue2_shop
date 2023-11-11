@@ -158,3 +158,11 @@ export const reqPayStatus = (orderId) => {
     method: "GET",
   });
 };
+
+// *獲取個人中心的數據  /api/order/auth/{page}/{limit}  GET
+export const reqMyOrderList = (page,limit) => {
+  return request({
+    url: `/order/auth/${page}/${limit}`,
+    method: "GET",
+  });
+};
