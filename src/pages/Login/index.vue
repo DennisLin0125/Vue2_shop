@@ -38,7 +38,9 @@
                 </label>
                 <span class="forget">忘記密碼？</span>
               </div>
-              <button class="btn" @click.prevent="userLogin">登&nbsp;&nbsp;入</button>
+              <button class="btn" @click.prevent="userLogin">
+                登&nbsp;&nbsp;入
+              </button>
             </form>
 
             <div class="call clearFix">
@@ -94,7 +96,10 @@ export default {
           // 派發action
           await this.$store.dispatch("userLogin", { phone, password });
           // 跳轉路由
-          this.$router.push("/home");
+          // 之前要先判斷有沒query參數
+          let toPath = this.$route.query.redirect || "/home";
+          this.$router.push(toPath);
+          
         } else {
           alert("資料有誤");
         }

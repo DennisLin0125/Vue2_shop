@@ -19,8 +19,8 @@
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的訂單</a>
-          <a href="###">我的購物車</a>
+          <router-link to="/center/myorder">我的訂單</router-link>
+          <router-link to="/shopcart">我的購物車</router-link>
           <a href="###">我的尚品匯</a>
           <a href="###">尚品匯會員</a>
           <a href="###">企業採購</a>

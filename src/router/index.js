@@ -86,8 +86,19 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   } else {
-    // 未登入 直接放行
-    next();
+    // 未登入 不能去交易和支付相關的頁面
+    let toPath = to.path;
+    if (
+      toPath == "/trade" ||
+      toPath.indexOf("pay") != -1 ||
+      toPath.indexOf("/center") != -1
+    ) {
+      // 跳轉
+      // 用query紀錄想要去的URL
+      next(`/login?redirect=${toPath}`);
+    } else {
+      next();
+    }
   }
 });
 

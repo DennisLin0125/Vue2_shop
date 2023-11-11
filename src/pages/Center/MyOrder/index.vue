@@ -176,7 +176,6 @@ export default {
       const { page, limit } = this;
       let result = await this.$API.reqMyOrderList(page, limit);
       if (result.code == 200) {
-        console.log(result.data);
         this.myOrder = result.data;
       }
     },
