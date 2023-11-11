@@ -8,14 +8,14 @@ export default [
   },
   {
     path: "/home",
-    component: ()=>import('@/pages/Home'),
+    component: () => import("@/pages/Home"),
     meta: {
       show: true,
     },
   },
   {
     path: "/center",
-    component: ()=>import('@/pages/Center'),
+    component: () => import("@/pages/Center"),
     meta: {
       show: true,
     },
@@ -26,14 +26,14 @@ export default [
       },
       {
         path: "grouporder",
-        component: ()=>import('@/pages/Center/GroupOrder'),
+        component: () => import("@/pages/Center/GroupOrder"),
         meta: {
           show: true,
         },
       },
       {
         path: "myorder",
-        component: ()=>import('@/pages/Center/MyOrder'),
+        component: () => import("@/pages/Center/MyOrder"),
         meta: {
           show: true,
         },
@@ -42,14 +42,14 @@ export default [
   },
   {
     path: "/paysuccess",
-    component: ()=>import('@/pages/PaySuccess'),
+    component: () => import("@/pages/PaySuccess"),
     meta: {
       show: true,
     },
   },
   {
     path: "/pay",
-    component: ()=>import('@/pages/Pay'),
+    component: () => import("@/pages/Pay"),
     meta: {
       show: true,
     },
@@ -60,11 +60,11 @@ export default [
       } else {
         next(false);
       }
-    }
+    },
   },
   {
     path: "/trade",
-    component: ()=>import('@/pages/Trade'),
+    component: () => import("@/pages/Trade"),
     meta: {
       show: true,
     },
@@ -80,21 +80,21 @@ export default [
   },
   {
     path: "/detail/:skuId",
-    component: ()=>import('@/pages/Detail'),
+    component: () => import("@/pages/Detail"),
     meta: {
       show: true,
     },
   },
   {
     path: "/login",
-    component: ()=>import('@/pages/Login'),
+    component: () => import("@/pages/Login"),
     meta: {
       show: false,
     },
   },
   {
     path: "/register",
-    component: ()=>import('@/pages/Register'),
+    component: () => import("@/pages/Register"),
     meta: {
       show: false,
     },
@@ -102,7 +102,7 @@ export default [
   {
     name: "search",
     path: "/search/:keyword?",
-    component: ()=>import('@/pages/Search'),
+    component: () => import("@/pages/Search"),
     meta: {
       show: true,
     },
@@ -110,7 +110,7 @@ export default [
   {
     name: "addcartsuccess",
     path: "/addcartsuccess",
-    component: ()=>import('@/pages/AddCartSuccess'),
+    component: () => import("@/pages/AddCartSuccess"),
     meta: {
       show: true,
     },
@@ -118,7 +118,7 @@ export default [
   {
     name: "shopcart",
     path: "/shopcart",
-    component: ()=>import('@/pages/ShopCart'),
+    component: () => import("@/pages/ShopCart"),
     meta: {
       show: true,
     },
