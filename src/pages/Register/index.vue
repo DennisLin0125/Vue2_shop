@@ -10,42 +10,65 @@
       </h3>
       <div class="content">
         <label>手機號碼:</label>
-        <input type="text" placeholder="請輸入你的手機號碼" v-model="phone" />
-        <span class="error-msg">錯誤提示訊息</span>
+        <input
+          placeholder="請輸入你的手機號碼"
+          v-model="phone"
+          name="phone"
+          v-validate="{ required: true, regex: /^1\d{10}$/ }"
+          :class="{ invalid: errors.has('phone') }"
+        />
+        <span class="error-msg">{{ errors.first("phone") }}</span>
       </div>
       <div class="content">
         <label>驗證碼:</label>
-        <input type="text" placeholder="請輸入驗證碼" v-model="code" />
+        <input
+          placeholder="請輸入你的驗證碼"
+          v-model="code"
+          name="code"
+          v-validate="{ required: true, regex: /^\d{6}$/ }"
+          :class="{ invalid: errors.has('code') }"
+        />
         <button
           style="width: 100px; height: 38px; margin-left: 10px"
           @click="getCode"
         >
           獲取驗證碼
         </button>
-        <span class="error-msg">錯誤提示訊息</span>
+        <span class="error-msg">{{ errors.first("code") }}</span>
       </div>
       <div class="content">
         <label>登入密碼:</label>
         <input
-          type="password"
-          placeholder="請輸入你的登入密碼"
+          placeholder="請輸入你的密碼"
           v-model="password"
+          name="password"
+          v-validate="{ required: true, regex: /^[0-9A-Za-z]{8,20}$/ }"
+          :class="{ invalid: errors.has('password') }"
         />
-        <span class="error-msg">錯誤提示訊息</span>
+        <span class="error-msg">{{ errors.first("password") }}</span>
       </div>
       <div class="content">
         <label>確認密碼:</label>
         <input
           type="password"
           placeholder="請輸入確認密碼"
-          v-model="checkPassword"
+          v-model="checkpassword"
+          name="checkpassword"
+          v-validate="{ required: true, is: password }"
+          :class="{ invalid: errors.has('checkpassword') }"
         />
-        <span class="error-msg">錯誤提示訊息</span>
+        <span class="error-msg">{{ errors.first("checkpassword") }}</span>
       </div>
       <div class="controls">
-        <input name="m1" type="checkbox" v-model="agree" />
+        <input
+          type="checkbox"
+          v-model="agree"
+          name="ischeck"
+          v-validate="{ required: true, checked: true }"
+          :class="{ invalid: errors.has('ischeck') }"
+        />
         <span>同意協議並註冊《尚品匯用戶協議》</span>
-        <span class="error-msg">錯誤提示訊息</span>
+        <span class="error-msg">{{ errors.first("ischeck") }}</span>
       </div>
       <div class="btn">
         <button @click="userRegister">完成註冊</button>
@@ -83,7 +106,7 @@ export default {
       // 密碼
       password: "",
       // 確認密碼
-      checkPassword: "",
+      checkpassword: "",
       // 同意註冊
       agree: false,
     };
@@ -104,24 +127,24 @@ export default {
     },
     // 用戶註冊
     async userRegister() {
-      const { phone, code, password, checkPassword } = this;
-      try {
-        if (
-          phone &&
-          code &&
-          password &&
-          checkPassword &&
-          password == checkPassword
-        ) {
+      const success = await this.$validator.validateAll();
+      // 表單驗證成功在發請求
+      if (success) {
+        const { phone, code, password } = this;
+        try {
           // 派發action
-          await this.$store.dispatch("userRegister", { phone, code, password });
+          await this.$store.dispatch("userRegister", {
+            phone,
+            code,
+            password,
+          });
           // 跳轉路由
           this.$router.push("/login");
-        } else {
-          alert("資料有誤");
+        } catch (error) {
+          alert(error);
         }
-      } catch (error) {
-        alert(error);
+      } else {
+        alert("輸入資料有誤");
       }
     },
   },

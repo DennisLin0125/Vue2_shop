@@ -45,6 +45,9 @@ Vue.use(myPlugins,{
   name:"upper"
 });
 
+// 引入vee validate
+import "@/plugins/validate";
+
 new Vue({
   render: (h) => h(App),
   // 註冊路由,這時候所有組件身上都有$route和$router屬性
