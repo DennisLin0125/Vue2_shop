@@ -155,15 +155,14 @@ export default {
         orderDetailList: this.orderInfo.detailArrayList,
       };
       // 發送請求
-      try {
-        let result = await this.$API.reqSubmitOrder(tradeNo, data);
-        if (result.code == 200) {
-          this.orderId = result.data;
-          // 路由跳轉
-          this.$router.push(`/pay?orderId=${this.orderId}`)
-        }
-      } catch (error) {
-        alert(error.message);
+
+      let result = await this.$API.reqSubmitOrder(tradeNo, data);
+      if (result.code == 200) {
+        this.orderId = result.data;
+        // 路由跳轉
+        this.$router.push(`/pay?orderId=${this.orderId}`);
+      }else{
+        alert(result.message)
       }
     },
   },

@@ -1,18 +1,4 @@
 // 引入路由組件
-import Home from "@/pages/Home";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Search from "@/pages/Search";
-import Detail from "@/pages/Detail";
-import AddCartSuccess from "@/pages/AddCartSuccess";
-import ShopCart from "@/pages/ShopCart";
-import Trade from "@/pages/Trade";
-import Pay from "@/pages/Pay";
-import PaySuccess from "@/pages/PaySuccess";
-import Center from "@/pages/Center";
-
-import GroupOrder from "@/pages/Center/GroupOrder";
-import MyOrder from "@/pages/Center/MyOrder";
 
 // 路由配置訊息
 export default [
@@ -22,14 +8,14 @@ export default [
   },
   {
     path: "/home",
-    component: Home,
+    component: ()=>import('@/pages/Home'),
     meta: {
       show: true,
     },
   },
   {
     path: "/center",
-    component: Center,
+    component: ()=>import('@/pages/Center'),
     meta: {
       show: true,
     },
@@ -40,14 +26,14 @@ export default [
       },
       {
         path: "grouporder",
-        component: GroupOrder,
+        component: ()=>import('@/pages/Center/GroupOrder'),
         meta: {
           show: true,
         },
       },
       {
         path: "myorder",
-        component: MyOrder,
+        component: ()=>import('@/pages/Center/MyOrder'),
         meta: {
           show: true,
         },
@@ -56,14 +42,14 @@ export default [
   },
   {
     path: "/paysuccess",
-    component: PaySuccess,
+    component: ()=>import('@/pages/PaySuccess'),
     meta: {
       show: true,
     },
   },
   {
     path: "/pay",
-    component: Pay,
+    component: ()=>import('@/pages/Pay'),
     meta: {
       show: true,
     },
@@ -78,7 +64,7 @@ export default [
   },
   {
     path: "/trade",
-    component: Trade,
+    component: ()=>import('@/pages/Trade'),
     meta: {
       show: true,
     },
@@ -94,21 +80,21 @@ export default [
   },
   {
     path: "/detail/:skuId",
-    component: Detail,
+    component: ()=>import('@/pages/Detail'),
     meta: {
       show: true,
     },
   },
   {
     path: "/login",
-    component: Login,
+    component: ()=>import('@/pages/Login'),
     meta: {
       show: false,
     },
   },
   {
     path: "/register",
-    component: Register,
+    component: ()=>import('@/pages/Register'),
     meta: {
       show: false,
     },
@@ -116,7 +102,7 @@ export default [
   {
     name: "search",
     path: "/search/:keyword?",
-    component: Search,
+    component: ()=>import('@/pages/Search'),
     meta: {
       show: true,
     },
@@ -124,7 +110,7 @@ export default [
   {
     name: "addcartsuccess",
     path: "/addcartsuccess",
-    component: AddCartSuccess,
+    component: ()=>import('@/pages/AddCartSuccess'),
     meta: {
       show: true,
     },
@@ -132,7 +118,7 @@ export default [
   {
     name: "shopcart",
     path: "/shopcart",
-    component: ShopCart,
+    component: ()=>import('@/pages/ShopCart'),
     meta: {
       show: true,
     },
