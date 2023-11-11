@@ -27,7 +27,23 @@ import store from "@/store";
 // 統一接收API文件
 import * as API from '@/api'
 
+// 引入懶加載
+import VueLazyload from 'vue-lazyload';
+// 引入gif
+import atm from '@/assets/atm.gif';
+// 使用插件
+Vue.use(VueLazyload,{
+  loading: atm,
+})
+
 Vue.config.productionTip = false;
+
+
+// 引入自定義插件
+import myPlugins from '@/plugins/myPlugins';
+Vue.use(myPlugins,{
+  name:"upper"
+});
 
 new Vue({
   render: (h) => h(App),
